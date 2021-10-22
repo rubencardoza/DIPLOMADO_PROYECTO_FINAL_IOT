@@ -39,24 +39,31 @@
 /*******************************************************************************
  * Public Source Code
  ******************************************************************************/
+ void encender_led_verde(){
+	 //encender led verde
+	 GPIO_PinWrite(GPIOD,5,0);
+ }
+ /*---------------------------------------------------------------*/
+ void apagar_led_verde(){
+	 //apagar led verde
+	 GPIO_PinWrite(GPIOD,5,1);
+ }
+
+ void encender_led_rojo(){
+	 //encender led verde
+	 GPIO_PinWrite(GPIOE,31,0);
+ }
+ /*---------------------------------------------------------------*/
+ void apagar_led_rojo(){
+	 //apagar led verde
+	 GPIO_PinWrite(GPIOE,31,1);
+ }
+ /*---------------------------------------------------------------*/
+ void toggle_led_rojo(){
+	 GPIO_PortToggle(GPIOE, 1U<<31);
+ }
 
 
-void led_on_green(){
-	//Encender led verde
-	GPIO_PinWrite(GPIOD,5,0);
-}
-
-void led_off_green(){
-	//Apagar led verde
-	GPIO_PinWrite(GPIOD,5,1);
-}
-/****************************************************************/
-void led_on_red(){
-	//Encender led verde
-	GPIO_PinWrite(GPIOE,31,0);
-}
-
-void led_off_red(){
-	//Apagar led verde
-	GPIO_PinWrite(GPIOE,31,1);
-}
+ void toggle_led_verde(){
+ 	 GPIO_PortToggle(GPIOD, 1U<<5);
+ }

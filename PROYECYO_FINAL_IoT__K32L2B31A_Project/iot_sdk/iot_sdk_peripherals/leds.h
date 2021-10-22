@@ -36,21 +36,28 @@
 /*******************************************************************************
  * Public Prototypes
  ******************************************************************************/
-/*
- * @brief enciende led verde y rojo de tarjeta
+/*!
+ * @brief enciende led verde de tarjeta FRDM-K32L2B3
+ *
  */
+ void encender_led_verde();
+ void encender_led_rojo();
+ /*---------------------------------------------------------------*/
+ /*!
+  * @brief apaga led verde de tarjeta FRDM-K32L2B3
+  *
+  */
+ void apagar_led_verde();
+ void apagar_led_rojo();
+ /*!
+  * @brief invierte estado de led rojo de tarjeta FRDM-K32L2B3
+  *
+  */
+ void toggle_led_rojo();
 
-void led_on_green();
-void led_on_red();
+ void toggle_led_verde();
 
-/*
- * @brief apaga led verdey rojo  de  tarjeta
- */
-
-void led_off_green();
-void led_off_red();
-
-/** @} */ // end of LEDS
-/** @} */ // end of PERIPHERALS
+/** @} */ // end of X LEDS
+/** @} */ // end of X PERIPHERALS
 
 #endif /* IOT_SDK_PERIPHERALS_LEDS_H_ */

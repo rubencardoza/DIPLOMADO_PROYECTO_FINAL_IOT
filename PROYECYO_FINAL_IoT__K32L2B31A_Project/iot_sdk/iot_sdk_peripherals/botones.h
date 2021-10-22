@@ -13,7 +13,6 @@
  ******************************************************************************/
 #include "peripherals.h"
 #include "fsl_gpio.h"
-
 /*!
  * @addtogroup PERIPHERALS
  * @{
@@ -37,9 +36,13 @@
 /*******************************************************************************
  * Public Prototypes
  ******************************************************************************/
+ bool boton1LeerEstado();
+ bool boton2LeerEstado();
 
-bool boton1leerestado();
-bool boton2leerestado();
+ void Key_Task_Init(void);
+ //void Key_Task_Run(void);
+ char Boton1_Presionado(void);
+
 /** @} */ // end of BOTONES group
 /** @} */ // end of PERIPHERALS group
 

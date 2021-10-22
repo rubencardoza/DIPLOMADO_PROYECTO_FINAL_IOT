@@ -6,19 +6,19 @@
  * @details
  *
  */
-#ifndef IOT_SDK_PERIPHERAL_SENSOR_DE_LUZ_H_
-#define IOT_SDK_PERIPHERAL_SENSOR_DE_LUZ_H_
+#ifndef IOT_SDK_PERIPHERALS_SENSOR_DE_LUZ_H_
+#define IOT_SDK_PERIPHERALS_SENSOR_DE_LUZ_H_
 /*******************************************************************************
  * Includes
  ******************************************************************************/
 #include "peripherals.h"
 
 /*!
- * @addtogroup X
+ * @addtogroup PERIPHERALS
  * @{
  */
 /*!
- * @addtogroup X
+ * @addtogroup SENSOR_DE_LUZ
  * @{
  */
 /*******************************************************************************
@@ -38,13 +38,17 @@
 /*******************************************************************************
  * Public Prototypes
  ******************************************************************************/
+ /*!
+  * @brief Retorna del resultado de la conversión ADC para sensor de luz
+  *
+  */
+ uint32_t sensorDeLuzObtenerdatoADC(void);
 
+// inicializa vables del modulo
+ void SensorLuz_Init(void);
+ void SensorLuz_Task_Run(void);
 
-void sensorDeLuzIniciarCaptura(void);
- void sensorDeLuzEsperarResultado(void);
- float sensorDeLuzObtenerDatosADC(void);
+/** @} */ // end of SENSOR_DE_LUZ group
+/** @} */ // end of PERIPHERALS group
 
-/** @} */ // end of X group
-/** @} */ // end of X group
-
-#endif /* IOT_SDK_PERIPHERAL_SENSOR_DE_LUZ_H_ */
+#endif /* IOT_SDK_PERIPHERALS_SENSOR_DE_LUZ_H_ */

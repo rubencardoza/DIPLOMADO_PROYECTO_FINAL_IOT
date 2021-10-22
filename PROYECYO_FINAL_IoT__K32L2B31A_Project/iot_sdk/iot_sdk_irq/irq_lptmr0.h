@@ -33,9 +33,11 @@
  * Public vars
  ******************************************************************************/
 extern volatile uint32_t lptmr0_irq_counter;
-extern volatile uint32_t led_rojo_irq_counter;
+extern volatile uint32_t tiempopresionado;
+
+
 extern volatile uint32_t boton1_presionado;
-extern volatile uint32_t boton2_presionado;
+extern volatile uint32_t estado;
 /*******************************************************************************
  * Public Prototypes
  ******************************************************************************/

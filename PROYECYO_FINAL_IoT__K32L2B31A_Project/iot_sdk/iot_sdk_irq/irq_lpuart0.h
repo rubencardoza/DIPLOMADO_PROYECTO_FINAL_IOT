@@ -13,7 +13,6 @@
  ******************************************************************************/
 #include "peripherals.h"
 
-
 /*!
  * @addtogroup IRQ
  * @{
@@ -26,8 +25,7 @@
  * Public Definitions
  ******************************************************************************/
 /*! @brief Ring buffer size (Unit: Byte). */
-#define RX_RING_BUFFER_SIZE 50
-
+#define RX_RING_BUFFER_SIZE 	100
 /*******************************************************************************
  * External vars
  ******************************************************************************/
@@ -39,8 +37,8 @@
 /*******************************************************************************
  * Public Prototypes
  ******************************************************************************/
-int32_t NumeroDeByteDisponiblesEnBufferRx();
-uint8_t pullBytedesdeBuefferCircular();
+uint8_t pullByteDesdeBufferCircular();
+int32_t numeroDeBytesDisponiblesEnBufferRx();
 /** @} */ // end of LPUART0 group
 /** @} */ // end of IRQ group
 
