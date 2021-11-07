@@ -38,6 +38,8 @@
  volatile uint32_t tiempopresionado=0;
  volatile uint32_t tiemposensorultrasonico=0;
  volatile uint32_t tiempocapturadato_echo=0;
+ volatile uint32_t tiemposensorultrasonico2=0;
+  volatile uint32_t tiempocapturadato_echo2=0;
 
 
  volatile uint32_t estado=0;
@@ -57,6 +59,9 @@ void LPTMR0_IRQHANDLER(void) {
    tiempopresionado++;
    tiemposensorultrasonico++;
    tiempocapturadato_echo++;
+   tiemposensorultrasonico2++;
+   tiempocapturadato_echo2++;
+
 
    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F
      Store immediate overlapping exception return operation might vector to incorrect interrupt. */

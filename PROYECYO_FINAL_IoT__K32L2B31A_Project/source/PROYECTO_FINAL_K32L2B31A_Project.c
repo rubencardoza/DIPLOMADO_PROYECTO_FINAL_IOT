@@ -27,6 +27,8 @@
 #include "irq_lptmr0.h"
 #include "irq_lpuart0.h"
 #include "sensor_ultrasonico_dp1.h"
+#include "sensor_ultrasonico_dp2.h"
+
 
 
 // Para modulo Alarma
@@ -93,7 +95,7 @@ int main(void) {
     SensorLuz_Init();
     Alarma_Init();
     Sensorultrasonico_1_init();
-
+    Sensorultrasonico_2_init();
 
 
 
@@ -101,6 +103,7 @@ int main(void) {
     	Modem_Task_Run();
     	SensorLuz_Task_Run();
     	Sensorultrasonico_1_Task_Run();
+    	Sensorultrasonico_2_Task_Run();
     }
     return 0 ;
 }
