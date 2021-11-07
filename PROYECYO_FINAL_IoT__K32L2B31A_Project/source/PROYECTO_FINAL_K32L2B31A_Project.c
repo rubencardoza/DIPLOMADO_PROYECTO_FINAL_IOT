@@ -28,6 +28,7 @@
 #include "irq_lpuart0.h"
 #include "sensor_ultrasonico_dp1.h"
 #include "sensor_ultrasonico_dp2.h"
+#include "cronometro.h"
 
 
 
@@ -97,13 +98,12 @@ int main(void) {
     Sensorultrasonico_1_init();
     Sensorultrasonico_2_init();
 
-
-
     while(1) { // multiTaks de tareas por Polling
     	Modem_Task_Run();
     	SensorLuz_Task_Run();
     	Sensorultrasonico_1_Task_Run();
     	Sensorultrasonico_2_Task_Run();
+    	tiempo_fermentacion();
     }
     return 0 ;
 }

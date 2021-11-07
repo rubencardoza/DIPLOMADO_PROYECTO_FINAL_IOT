@@ -60,7 +60,7 @@ void Sensorultrasonico_2_init(void){
 		 cont2=0;
 		 GPIO_PinWrite(GPIOB,2,1);	//////pulso del trid
 	 }
-	 if(tiemposensorultrasonico2==91){
+	 if(tiemposensorultrasonico2>=91){
 		//apagar_led_rojo();
 	 	GPIO_PinWrite(GPIOB,2,0);
 	 	tiemposensorultrasonico2=0;
@@ -68,11 +68,10 @@ void Sensorultrasonico_2_init(void){
 	 if(GPIO_PinRead(GPIOB,3)!=0){
 	 		 cont2++;
 	 }
-	 if(tiempocapturadato_echo2>150){
+	 if(tiempocapturadato_echo2>160){
 		 distancia2 = ((cont2+1)*5)/4;
-		 if(tiempocapturadato_echo2==151){
-			 tiempocapturadato_echo2=0;
-		 }
+		 tiempocapturadato_echo2=0;
+
 	 }
 	return(distancia2);
 }
