@@ -24,6 +24,7 @@
 
 #include "sensor_de_luz.h"
 #include "sensor_ultrasonico_dp1.h"
+#include "sensor_ultrasonico_dp2.h"
 
 /*******************************************************************************
  * Definitions
@@ -55,6 +56,7 @@ const char APN_APP[]="internet.colombiamovil.com.co";
  ******************************************************************************/
 extern uint32_t adc_sensor_de_luz;
 extern float sensor_1_ultrasonico;
+extern float sensor_2_ultrasonico;
 
 /*******************************************************************************
  * Local vars
@@ -241,9 +243,9 @@ void Modem_Task_Run(void){
 	case ST_MOD_PUBLIC_DAT:
 		tiemposensorultrasonico=0;
 		tiempocapturadato_echo=0;
-		printf("Temperatura,%u,NivelDeposito1,%0.1f\r\n",adc_sensor_de_luz,sensor_1_ultrasonico);
+		printf("Temperatura,%u,Nivel1Deposito,%0.1f,Nivel2Deposito,%0.1f\r\n",adc_sensor_de_luz,sensor_1_ultrasonico,sensor_2_ultrasonico);
 		putchar(CNTL_Z);
-		Modem_Rta_Cmd(3000,"OK",ST_MOD_PUBLIC_DAT,ST_MOD_PUBLIC_DAT);
+		Modem_Rta_Cmd(5000,"OK",ST_MOD_PUBLIC_DAT,ST_MOD_PUBLIC_DAT);
 		//recibiMsgQtt = 0;*/
 		//Modem_Rta_Cmd_2("RING",ST_MOD_RING_ON);
 		//Key_Task_Run();

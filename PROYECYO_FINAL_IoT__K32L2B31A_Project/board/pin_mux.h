@@ -53,6 +53,34 @@ void BOARD_InitBootPins(void);
 #define BOARD_GPIOB1_PIN_MASK (1U << 1U)      /*!<@brief PORT pin mask */
                                               /* @} */
 
+/*! @name PORTB2 (number 37), J4[6]/A2/LCD_P2
+  @{ */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_GPIOB2_FGPIO FGPIOB             /*!<@brief FGPIO peripheral base pointer */
+#define BOARD_GPIOB2_GPIO GPIOB               /*!<@brief GPIO peripheral base pointer */
+#define BOARD_GPIOB2_GPIO_PIN_MASK (1U << 2U) /*!<@brief GPIO pin mask */
+
+/* Symbols to be used with PORT driver */
+#define BOARD_GPIOB2_PORT PORTB               /*!<@brief PORT peripheral base pointer */
+#define BOARD_GPIOB2_PIN 2U                   /*!<@brief PORT pin number */
+#define BOARD_GPIOB2_PIN_MASK (1U << 2U)      /*!<@brief PORT pin mask */
+                                              /* @} */
+
+/*! @name PORTB3 (number 38), J4[8]/A3/LCD_P3
+  @{ */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_GPIOB3_FGPIO FGPIOB             /*!<@brief FGPIO peripheral base pointer */
+#define BOARD_GPIOB3_GPIO GPIOB               /*!<@brief GPIO peripheral base pointer */
+#define BOARD_GPIOB3_GPIO_PIN_MASK (1U << 3U) /*!<@brief GPIO pin mask */
+
+/* Symbols to be used with PORT driver */
+#define BOARD_GPIOB3_PORT PORTB               /*!<@brief PORT peripheral base pointer */
+#define BOARD_GPIOB3_PIN 3U                   /*!<@brief PORT pin number */
+#define BOARD_GPIOB3_PIN_MASK (1U << 3U)      /*!<@brief PORT pin mask */
+                                              /* @} */
+
 /*!
  * @brief Configures pin routing and optionally pin electrical features.
  *
