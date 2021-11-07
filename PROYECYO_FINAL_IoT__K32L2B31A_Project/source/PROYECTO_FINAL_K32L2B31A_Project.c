@@ -26,10 +26,12 @@
 #include "modem.h"
 #include "irq_lptmr0.h"
 #include "irq_lpuart0.h"
+#include "sensor_ultrasonico_dp1.h"
 
 
 // Para modulo Alarma
 volatile uint32_t segAct=0;
+volatile uint32_t tiempoAct=0;
 
 // Inicializa Alarma
 void Alarma_Init(void){
@@ -90,9 +92,15 @@ int main(void) {
     Key_Task_Init();
     SensorLuz_Init();
     Alarma_Init();
+    Sensorultrasonico_1_init();
+
+
+
+
     while(1) { // multiTaks de tareas por Polling
     	Modem_Task_Run();
     	SensorLuz_Task_Run();
+    	Sensorultrasonico_1_Task_Run();
     }
     return 0 ;
 }

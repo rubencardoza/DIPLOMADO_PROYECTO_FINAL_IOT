@@ -186,7 +186,7 @@ instance:
       - pinPolarity: 'kLPTMR_PinPolarityActiveHigh'
       - enableFreeRunning: 'false'
       - bypassPrescaler: 'true'
-      - prescalerClockSource: 'kLPTMR_PrescalerClock_1'
+      - prescalerClockSource: 'kLPTMR_PrescalerClock_0'
       - clockSource: 'BOARD_BootClockRUN'
       - value: 'kLPTMR_Prescale_Glitch_0'
       - timerPeriod: '1ms'
@@ -205,7 +205,7 @@ const lptmr_config_t LPTMR0_config = {
   .pinPolarity = kLPTMR_PinPolarityActiveHigh,
   .enableFreeRunning = false,
   .bypassPrescaler = true,
-  .prescalerClockSource = kLPTMR_PrescalerClock_1,
+  .prescalerClockSource = kLPTMR_PrescalerClock_0,
   .value = kLPTMR_Prescale_Glitch_0
 };
 
