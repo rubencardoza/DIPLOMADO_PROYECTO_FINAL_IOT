@@ -57,6 +57,9 @@ const char APN_APP[]="internet.colombiamovil.com.co";
 extern uint32_t adc_sensor_de_luz;
 extern float sensor_1_ultrasonico;
 extern float sensor_2_ultrasonico;
+extern uint32_t minutos;
+extern uint32_t segundos;
+extern uint32_t horas;
 
 /*******************************************************************************
  * Local vars
@@ -166,7 +169,7 @@ enum{
 };
 
 void Modem_Init(void){
-	modemSt = ST_MOD_PUBLIC_DAT;
+	modemSt = ST_MOD_CONN_PUB;
 }
 
 
@@ -238,12 +241,10 @@ void Modem_Task_Run(void){
 	break;
 	case ST_MOD_CONN_PUB:
 		Modem_Send_Cmd("AT+QMTPUB=0,0,0,0,\"mensajes\"\r\n");		//tx "AT+QMTPUB=0,0,0,0,TOPICO_APP"
-		Modem_Rta_Cmd(3000,">",ST_MOD_PUBLIC_DAT,ST_MOD_OPEN_MQTT);
+		Modem_Rta_Cmd(5000,">",ST_MOD_PUBLIC_DAT,ST_MOD_PUBLIC_DAT);
 	break;
 	case ST_MOD_PUBLIC_DAT:
-		tiemposensorultrasonico=0;
-		tiempocapturadato_echo=0;
-		printf("Temperatura,%u,Nivel1Deposito,%0.1f,Nivel2Deposito,%0.1f\r\n",adc_sensor_de_luz,sensor_1_ultrasonico,sensor_2_ultrasonico);
+		printf("Nivel1Deposito,%0.1f,Nivel2Deposito,%0.1f,Fermentacion,%d : %d : %d\r\n",sensor_1_ultrasonico,sensor_2_ultrasonico,horas,minutos,segundos);
 		putchar(CNTL_Z);
 		Modem_Rta_Cmd(5000,"OK",ST_MOD_PUBLIC_DAT,ST_MOD_PUBLIC_DAT);
 		//recibiMsgQtt = 0;*/
