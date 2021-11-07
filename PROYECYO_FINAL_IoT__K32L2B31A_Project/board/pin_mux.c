@@ -48,7 +48,7 @@ pin_labels:
 - {pin_num: '37', pin_signal: LCD_P2/ADC0_SE12/PTB2/I2C0_SCL/TPM2_CH0, label: 'J4[6]/A2/LCD_P2', identifier: GPIOB2}
 - {pin_num: '38', pin_signal: LCD_P3/ADC0_SE13/PTB3/I2C0_SDA/TPM2_CH1, label: 'J4[8]/A3/LCD_P3', identifier: GPIOB3}
 - {pin_num: '45', pin_signal: LCD_P22/ADC0_SE11/PTC2/I2C1_SDA/TPM0_CH1, label: 'J4[10]/A4/LCD_P22'}
-- {pin_num: '44', pin_signal: LCD_P21/ADC0_SE15/PTC1/LLWU_P6/RTC_CLKIN/I2C1_SCL/TPM0_CH0, label: 'J4[12]/A5/LCD_P21'}
+- {pin_num: '44', pin_signal: LCD_P21/ADC0_SE15/PTC1/LLWU_P6/RTC_CLKIN/I2C1_SCL/TPM0_CH0, label: 'J4[12]/A5/LCD_P21', identifier: GPIOC1}
 - {pin_num: '5', pin_signal: USB0_DP, label: 'J10[3]/USB_DP', identifier: USB0_DP}
 - {pin_num: '6', pin_signal: USB0_DM, label: 'J10[2]/USB_DM', identifier: USB0_DM}
 - {pin_num: '22', pin_signal: PTA0/TPM0_CH5/SWD_CLK, label: 'J11[4]/K32L2_SWD_CLK'}
@@ -112,6 +112,7 @@ BOARD_InitPins:
   - {pin_num: '36', peripheral: GPIOB, signal: 'GPIO, 1', pin_signal: LCD_P1/ADC0_SE9/PTB1/I2C0_SDA/TPM1_CH1, direction: INPUT}
   - {pin_num: '37', peripheral: GPIOB, signal: 'GPIO, 2', pin_signal: LCD_P2/ADC0_SE12/PTB2/I2C0_SCL/TPM2_CH0, direction: OUTPUT}
   - {pin_num: '38', peripheral: GPIOB, signal: 'GPIO, 3', pin_signal: LCD_P3/ADC0_SE13/PTB3/I2C0_SDA/TPM2_CH1, direction: INPUT}
+  - {pin_num: '44', peripheral: GPIOC, signal: 'GPIO, 1', pin_signal: LCD_P21/ADC0_SE15/PTC1/LLWU_P6/RTC_CLKIN/I2C1_SCL/TPM0_CH0, direction: INPUT}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -126,6 +127,8 @@ void BOARD_InitPins(void)
 {
     /* Port B Clock Gate Control: Clock enabled */
     CLOCK_EnableClock(kCLOCK_PortB);
+    /* Port C Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortC);
 
     gpio_pin_config_t GPIOB0_config = {
         .pinDirection = kGPIO_DigitalOutput,
@@ -155,6 +158,13 @@ void BOARD_InitPins(void)
     /* Initialize GPIO functionality on pin PTB3 (pin 38)  */
     GPIO_PinInit(BOARD_GPIOB3_GPIO, BOARD_GPIOB3_PIN, &GPIOB3_config);
 
+    gpio_pin_config_t GPIOC1_config = {
+        .pinDirection = kGPIO_DigitalInput,
+        .outputLogic = 0U
+    };
+    /* Initialize GPIO functionality on pin PTC1 (pin 44)  */
+    GPIO_PinInit(BOARD_GPIOC1_GPIO, BOARD_GPIOC1_PIN, &GPIOC1_config);
+
     /* PORTB0 (pin 35) is configured as PTB0 */
     PORT_SetPinMux(BOARD_GPIOB0_PORT, BOARD_GPIOB0_PIN, kPORT_MuxAsGpio);
 
@@ -166,6 +176,9 @@ void BOARD_InitPins(void)
 
     /* PORTB3 (pin 38) is configured as PTB3 */
     PORT_SetPinMux(BOARD_GPIOB3_PORT, BOARD_GPIOB3_PIN, kPORT_MuxAsGpio);
+
+    /* PORTC1 (pin 44) is configured as PTC1 */
+    PORT_SetPinMux(BOARD_GPIOC1_PORT, BOARD_GPIOC1_PIN, kPORT_MuxAsGpio);
 }
 
 /* clang-format off */
