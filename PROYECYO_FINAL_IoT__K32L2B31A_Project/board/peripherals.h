@@ -37,13 +37,13 @@ extern "C" {
 /* Definition of peripheral ID */
 #define LPTMR0_PERIPHERAL LPTMR0
 /* Definition of the clock source frequency */
-#define LPTMR0_CLK_FREQ 1000UL
+#define LPTMR0_CLK_FREQ 8000000UL
 /* Definition of the prescaled clock source frequency */
-#define LPTMR0_INPUT_FREQ 1000UL
+#define LPTMR0_INPUT_FREQ 8000000UL
 /* Definition of the timer period in us */
 #define LPTMR0_USEC_COUNT 1000UL
 /* Definition of the timer period in number of ticks */
-#define LPTMR0_TICKS 1UL
+#define LPTMR0_TICKS 8000UL
 /* LPTMR0 interrupt vector ID (number). */
 #define LPTMR0_IRQN LPTMR0_IRQn
 /* LPTMR0 interrupt handler identifier. */

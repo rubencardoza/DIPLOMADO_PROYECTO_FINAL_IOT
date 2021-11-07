@@ -1,24 +1,24 @@
-/*! @file : irq_lptmr0.h
+/*! @file : sensor_ultrasonico_dp1.h
  * @author  Luis Carlos Nigrinis Alvarez
  * @version 1.0.0
- * @date    11/09/2021
+ * @date    6/11/2021
  * @brief   Driver para 
  * @details
  *
  */
-#ifndef IOT_SDK_IRQ_IRQ_LPTMR0_H_
-#define IOT_SDK_IRQ_IRQ_LPTMR0_H_
+#ifndef IOT_SDK_PERIPHERALS_SENSOR_ULTRASONICO_DP1_H_
+#define IOT_SDK_PERIPHERALS_SENSOR_ULTRASONICO_DP1_H_
 /*******************************************************************************
  * Includes
  ******************************************************************************/
-#include"peripherals.h"
+#include "peripherals.h"
 
 /*!
- * @addtogroup IRQ
+ * @addtogroup X
  * @{
  */
 /*!
- * @addtogroup LPRMR0
+ * @addtogroup X
  * @{
  */
 /*******************************************************************************
@@ -32,20 +32,15 @@
 /*******************************************************************************
  * Public vars
  ******************************************************************************/
-extern volatile uint32_t lptmr0_irq_counter;
-extern volatile uint32_t tiempopresionado;
-extern volatile uint32_t tiemposensorultrasonico;
-extern volatile uint32_t tiempocapturadato_echo;
-
-
-
-extern volatile uint32_t boton1_presionado;
-extern volatile uint32_t estado;
+ //float sensorultrasonicobtenerdatodp1(void);
+ void Sensorultrasonico_1_init(void);
+ void Sensorultrasonico_1_Task_Run(void);
 /*******************************************************************************
  * Public Prototypes
  ******************************************************************************/
 
-/** @} */ // end of X LPTMR0
-/** @} */ // end of X IRQ
 
-#endif /* IOT_SDK_IRQ_IRQ_LPTMR0_H_ */
+/** @} */ // end of X group
+/** @} */ // end of X group
+
+#endif /* IOT_SDK_PERIPHERALS_SENSOR_ULTRASONICO_DP1_H_ */

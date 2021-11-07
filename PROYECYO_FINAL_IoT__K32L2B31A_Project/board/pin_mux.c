@@ -43,8 +43,8 @@ pin_labels:
 - {pin_num: '11', pin_signal: ADC0_DP3/ADC0_SE3/PTE22/TPM2_CH0/UART2_TX/FXIO0_D6, label: 'J4[5]/DIFF_ADC1_DP', identifier: sensor_de_luz}
 - {pin_num: '10', pin_signal: LCD_P60/ADC0_DM0/ADC0_SE4a/PTE21/TPM1_CH1/LPUART0_RX/FXIO0_D5, label: 'J4[3]/DIFF_ADC0_DM/LCD_P60', identifier: LCD_P60}
 - {pin_num: '9', pin_signal: LCD_P59/ADC0_DP0/ADC0_SE0/PTE20/TPM1_CH0/LPUART0_TX/FXIO0_D4, label: 'J4[1]/DIFF_ADC0_DP/LCD_P59', identifier: LCD_P59}
-- {pin_num: '35', pin_signal: LCD_P0/ADC0_SE8/PTB0/LLWU_P5/I2C0_SCL/TPM1_CH0, label: 'J4[2]/A0/LCD_P0'}
-- {pin_num: '36', pin_signal: LCD_P1/ADC0_SE9/PTB1/I2C0_SDA/TPM1_CH1, label: 'J4[4]/A1/LCD_P1'}
+- {pin_num: '35', pin_signal: LCD_P0/ADC0_SE8/PTB0/LLWU_P5/I2C0_SCL/TPM1_CH0, label: 'J4[2]/A0/LCD_P0', identifier: GPIOB0}
+- {pin_num: '36', pin_signal: LCD_P1/ADC0_SE9/PTB1/I2C0_SDA/TPM1_CH1, label: 'J4[4]/A1/LCD_P1', identifier: GPIOB1}
 - {pin_num: '37', pin_signal: LCD_P2/ADC0_SE12/PTB2/I2C0_SCL/TPM2_CH0, label: 'J4[6]/A2/LCD_P2'}
 - {pin_num: '38', pin_signal: LCD_P3/ADC0_SE13/PTB3/I2C0_SDA/TPM2_CH1, label: 'J4[8]/A3/LCD_P3'}
 - {pin_num: '45', pin_signal: LCD_P22/ADC0_SE11/PTC2/I2C1_SDA/TPM0_CH1, label: 'J4[10]/A4/LCD_P22'}
@@ -107,7 +107,9 @@ void BOARD_InitBootPins(void)
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 BOARD_InitPins:
 - options: {callFromInitBoot: 'true', prefix: BOARD_, coreID: core0, enableClock: 'true'}
-- pin_list: []
+- pin_list:
+  - {pin_num: '35', peripheral: GPIOB, signal: 'GPIO, 0', pin_signal: LCD_P0/ADC0_SE8/PTB0/LLWU_P5/I2C0_SCL/TPM1_CH0, direction: OUTPUT}
+  - {pin_num: '36', peripheral: GPIOB, signal: 'GPIO, 1', pin_signal: LCD_P1/ADC0_SE9/PTB1/I2C0_SDA/TPM1_CH1, direction: INPUT}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -120,6 +122,28 @@ BOARD_InitPins:
  * END ****************************************************************************************************************/
 void BOARD_InitPins(void)
 {
+    /* Port B Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortB);
+
+    gpio_pin_config_t GPIOB0_config = {
+        .pinDirection = kGPIO_DigitalOutput,
+        .outputLogic = 0U
+    };
+    /* Initialize GPIO functionality on pin PTB0 (pin 35)  */
+    GPIO_PinInit(BOARD_GPIOB0_GPIO, BOARD_GPIOB0_PIN, &GPIOB0_config);
+
+    gpio_pin_config_t GPIOB1_config = {
+        .pinDirection = kGPIO_DigitalInput,
+        .outputLogic = 0U
+    };
+    /* Initialize GPIO functionality on pin PTB1 (pin 36)  */
+    GPIO_PinInit(BOARD_GPIOB1_GPIO, BOARD_GPIOB1_PIN, &GPIOB1_config);
+
+    /* PORTB0 (pin 35) is configured as PTB0 */
+    PORT_SetPinMux(BOARD_GPIOB0_PORT, BOARD_GPIOB0_PIN, kPORT_MuxAsGpio);
+
+    /* PORTB1 (pin 36) is configured as PTB1 */
+    PORT_SetPinMux(BOARD_GPIOB1_PORT, BOARD_GPIOB1_PIN, kPORT_MuxAsGpio);
 }
 
 /* clang-format off */

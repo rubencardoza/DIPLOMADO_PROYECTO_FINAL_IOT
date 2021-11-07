@@ -18,10 +18,12 @@
 #include "K32L2B31A.h"
 #include "fsl_debug_console.h"
 #include "leds.h"
-#include "sensor_de_luz.h"
 #include "botones.h"
 #include "irq_lptmr0.h"
 #include "fsl_gpio.h"
+
+#include "sensor_de_luz.h"
+#include "sensor_ultrasonico_dp1.h"
 
 /*******************************************************************************
  * Definitions
@@ -51,7 +53,8 @@ const char APN_APP[]="internet.colombiamovil.com.co";
 /*******************************************************************************
  * External vars
  ******************************************************************************/
-
+extern uint32_t adc_sensor_de_luz;
+extern float sensor_1_ultrasonico;
 
 /*******************************************************************************
  * Local vars
@@ -161,11 +164,11 @@ enum{
 };
 
 void Modem_Init(void){
-	modemSt = ST_MOD_CFG;
+	modemSt = ST_MOD_PUBLIC_DAT;
 }
 
 
-extern uint32_t adc_sensor_de_luz;
+
 //uint32_t tiempopresionado;
 uint32_t cuenta=1;
 //uint32_t n;
@@ -236,41 +239,17 @@ void Modem_Task_Run(void){
 		Modem_Rta_Cmd(3000,">",ST_MOD_PUBLIC_DAT,ST_MOD_OPEN_MQTT);
 	break;
 	case ST_MOD_PUBLIC_DAT:
-
-		/*printf("%u\r\n",adc_sensor_de_luz);
+		tiemposensorultrasonico=0;
+		tiempocapturadato_echo=0;
+		printf("Temperatura,%u,NivelDeposito1,%0.1f\r\n",adc_sensor_de_luz,sensor_1_ultrasonico);
 		putchar(CNTL_Z);
-		Modem_Rta_Cmd(10000,"OK",ST_MOD_PUBLIC_DAT,ST_MOD_CONN_PUB);
-		recibiMsgQtt = 0;*/
-		Key_Task_Run();
+		Modem_Rta_Cmd(3000,"OK",ST_MOD_PUBLIC_DAT,ST_MOD_PUBLIC_DAT);
+		//recibiMsgQtt = 0;*/
 		//Modem_Rta_Cmd_2("RING",ST_MOD_RING_ON);
+		//Key_Task_Run();
 
 	break;
-////////////////////////////////////////////////////////////////////////////
 
-	/*case ST_MOD_RING_OFF:
-		encender_led_rojo();
-		Modem_Rta_Cmd(1000,"RING",ST_MOD_RING_ON,ST_MOD_RING_OFF);
-	break;*/
-	case ST_MOD_RING_ON:
-	     cuenta=cuenta+1;
-	     printf("AT+CLCC\r\n");
-	     Modem_Rta_Cmd(20000,"\"3052646735\",129",ST_MOD_IDENTIFICADOR,ST_MOD_RING_ON);
-	     Modem_Rta_Cmd(20000,"\"3024337656\",129",ST_MOD_IDENTIFICADOR,ST_MOD_RING_ON);
-	     Modem_Rta_Cmd(20000,"\"3215883714\",129",ST_MOD_IDENTIFICADOR,ST_MOD_RING_ON);
-	     Modem_Rta_Cmd(20000,"\"3108283166\",129",ST_MOD_IDENTIFICADOR,ST_MOD_RING_ON);
-	break;
-
-	case ST_MOD_IDENTIFICADOR:
-		 if(cuenta%2==0){
-			 encender_led_verde();
-			 printf("ATH\r\n");
-			 Modem_Rta_Cmd(10000,"OK",ST_MOD_PUBLIC_DAT,ST_MOD_IDENTIFICADOR);
-		 }else{
-			 apagar_led_verde();
-			 printf("ATH\r\n");
-			 Modem_Rta_Cmd(10000,"OK",ST_MOD_PUBLIC_DAT,ST_MOD_IDENTIFICADOR);
-			 }
-	break;
 
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -326,7 +305,7 @@ void Key_Task_Run(void){
  	    	boton1_presionado=1;
  	    	tiempopresionado=0;
  	 }
- 	if(tiempopresionado==10000){
+ 	if(tiempopresionado==1000){
  	 	  if(!B1 && !estado){
  	 		  printf("%u\r\n",adc_sensor_de_luz);
  	 		  putchar(CNTL_Z);
