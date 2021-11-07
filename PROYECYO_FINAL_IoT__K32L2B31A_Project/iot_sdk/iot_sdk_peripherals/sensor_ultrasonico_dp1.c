@@ -77,9 +77,6 @@ void Sensorultrasonico_1_init(void){
 	return(distancia);
 }
 
-
-
-
 void Sensorultrasonico_1_Task_Run(void){
 	  sensor_1_ultrasonico=Sensorultrasonico_1_obtenerdato();
 }
