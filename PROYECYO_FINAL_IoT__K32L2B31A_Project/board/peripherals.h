@@ -33,6 +33,8 @@ extern "C" {
 #define ADC0_CH0_CONTROL_GROUP 0
 /* Channel 1 (SE.26) conversion control group. */
 #define ADC0_CH1_CONTROL_GROUP 0
+/* Channel 2 (SE.14) conversion control group. */
+#define ADC0_CH2_CONTROL_GROUP 0
 /* BOARD_InitPeripherals defines for LPTMR0 */
 /* Definition of peripheral ID */
 #define LPTMR0_PERIPHERAL LPTMR0
@@ -60,7 +62,7 @@ extern "C" {
 /***********************************************************************************************************************
  * Global variables
  **********************************************************************************************************************/
-extern adc16_channel_config_t ADC0_channelsConfig[2];
+extern adc16_channel_config_t ADC0_channelsConfig[3];
 extern const adc16_config_t ADC0_config;
 extern const adc16_channel_mux_mode_t ADC0_muxMode;
 extern const lptmr_config_t LPTMR0_config;

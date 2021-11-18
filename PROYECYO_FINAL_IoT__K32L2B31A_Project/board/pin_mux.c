@@ -113,6 +113,7 @@ BOARD_InitPins:
   - {pin_num: '37', peripheral: GPIOB, signal: 'GPIO, 2', pin_signal: LCD_P2/ADC0_SE12/PTB2/I2C0_SCL/TPM2_CH0, direction: OUTPUT}
   - {pin_num: '38', peripheral: GPIOB, signal: 'GPIO, 3', pin_signal: LCD_P3/ADC0_SE13/PTB3/I2C0_SDA/TPM2_CH1, direction: INPUT}
   - {pin_num: '44', peripheral: GPIOC, signal: 'GPIO, 1', pin_signal: LCD_P21/ADC0_SE15/PTC1/LLWU_P6/RTC_CLKIN/I2C1_SCL/TPM0_CH0, direction: INPUT}
+  - {pin_num: '43', peripheral: ADC0, signal: 'SE, 14', pin_signal: LCD_P20/ADC0_SE14/PTC0/EXTRG_IN/USB_SOF_OUT/CMP0_OUT}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -176,6 +177,9 @@ void BOARD_InitPins(void)
 
     /* PORTB3 (pin 38) is configured as PTB3 */
     PORT_SetPinMux(BOARD_GPIOB3_PORT, BOARD_GPIOB3_PIN, kPORT_MuxAsGpio);
+
+    /* PORTC0 (pin 43) is configured as ADC0_SE14 */
+    PORT_SetPinMux(PORTC, 0U, kPORT_PinDisabledOrAnalog);
 
     /* PORTC1 (pin 44) is configured as PTC1 */
     PORT_SetPinMux(BOARD_GPIOC1_PORT, BOARD_GPIOC1_PIN, kPORT_MuxAsGpio);
