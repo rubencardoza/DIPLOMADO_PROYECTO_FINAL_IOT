@@ -30,7 +30,7 @@ void sensorDetemperaturaEsperarResultado(void);
 /*******************************************************************************
  * Local vars
  ******************************************************************************/
-
+float sensor_temperatura;
 
 /*******************************************************************************
  * Private Source Code
@@ -76,3 +76,7 @@ void sensorDetemperaturaIniciarCaptura(){
 
  }
 
+
+ void Sensortemperatura_Task_Run(void){
+ 	  sensor_temperatura=SensorDetemperaturaObtenerDatosADC();
+ }

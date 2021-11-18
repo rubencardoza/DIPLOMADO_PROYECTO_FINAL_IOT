@@ -36,7 +36,7 @@
 /*******************************************************************************
  * Public Prototypes
  ******************************************************************************/
-#define TIME_WAIT_RTA_CMD 2000 //[=] Segundos que espera una Respuesta del Modem
+#define TIME_WAIT_RTA_CMD 5000 //[=] Segundos que espera una Respuesta del Modem
 //despues de enviar un comando
 
 #define Modem_Send_Cmd(comandoStr) printf(comandoStr)

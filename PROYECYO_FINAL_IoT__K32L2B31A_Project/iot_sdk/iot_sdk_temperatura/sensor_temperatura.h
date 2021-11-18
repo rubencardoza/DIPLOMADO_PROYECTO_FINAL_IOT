@@ -41,6 +41,7 @@
 void sensorDetemperaturaIniciarCaptura(void);
 void sensorDetemperaturaEsperarResultado(void);
  float SensorDetemperaturaObtenerDatosADC(void);
+ void Sensortemperatura_Task_Run(void);
 /** @} */ // end of X group
 /** @} */ // end of X group
 
