@@ -1,0 +1,88 @@
+
+version: '3.3'
+
+services:
+  influxdb:
+    container_name: influxdb
+    image: influxdb
+    restart: always
+    env_file:
+      - ./credentials.env
+    volumes:
+     -  /tmp/testdata/influx:/root/.influxdbv2
+    ports:
+      - "8086:8086"
+    networks:
+      default:
+        aliases:
+          - influxdb
+  grafana:
+    container_name: grafana
+    image: taller4/grafana
+    build:
+      context: .
+      dockerfile: Dockerfile.grafana
+    restart: always
+    ports:
+      - "3000:3000"
+  api:
+    container_name: api
+    image: taller4/api
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    env_file:
+      - ./credentials.env
+    volumes:
+      - ./app:/app
+    ports:
+      - "80:80"
+    networks:
+      default:
+        aliases:
+          - api
+  proxy:
+    container_name: proxy
+    image: taller3/proxy
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile.proxy
+    env_file:
+      - ./credentials.env
+    volumes:
+      - ./app:/app
+    ports:
+      - "8888:8888"
+    depends_on:
+      - rabbit
+    links: 
+      - rabbit
+  rabbit:
+    container_name: rabbit
+    image: taller2/rabbit
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile.rabbit
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+      - "1883:1883"
+    networks:
+      default:
+        aliases:
+          - rabbit
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://rabbit:15672"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+networks:
+  default:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.28.0.0/24
