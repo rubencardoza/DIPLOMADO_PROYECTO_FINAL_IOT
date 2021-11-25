@@ -6,5 +6,9 @@ ENV TZ=America/Bogota
 
 RUN pip install pika paho-mqtt
 RUN pip install influxdb influxdb-client
+RUN pip install datetime
+RUN pip install influxdb_client
+RUN pip install pika
+RUN pip install 'influxdb-client[extra]'
 COPY . /app
 CMD ["python", "proxy.py"]

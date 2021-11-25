@@ -49,8 +49,66 @@ def guardar_datos_influxdb_sin_procesar(a):
     print()
     print("ENVIANDO DATOS  A INFLUXDB---->Temperatura->", temperatura," Presion->",presion,"Nivel--->",nivel)
     print()
-    #solicitar_datos_de_influxdb()
+    solicitar_datos_de_influxdb()
     return
+def solicitar_datos_de_influxdb():
+    print("SOLICITAR DATOS ALMACENADOS......")
+    print()
+    data_frame = query_api.query_data_frame('from(bucket:"DATOS_PROYECTO_FINAL") '
+                                            '|> range(start: -60m) '
+                                            '|> pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value") '
+                                            '|> keep(columns: ["TEMP", "PRES", "NIV", "FECHA"])')
+
+    datos_filtrados = data_frame.to_string()
+
+    print("DATAFRAME DE DATOS SOLICITADOS")
+    print()
+    print(datos_filtrados)
+    print()
+    print()
+    print("ANALIZANDO DATOS....")
+    print()
+    
+   
+    ##############################################################
+    ######### AQUI VA CODIGO DE ANALISIS DE DATOS ################
+    ##############################################################
+       
+        
+        
+     
+    ######################################envio de datos ########################
+       
+    print()
+    print("DATOS FILTRADOS...")
+    print()
+    point2 = Point("DATOS_FERMENTACION_PROCESADOS").field("TEMPERATURA", float(data_frame['TEMP'].values[-1])).field("PRESION", float(data_frame['PRES'].values[-1])).field("NIVEL", float(data_frame['NIV'].values[-1]))
+    write_api.write("FERMENTACION", my_org, point2)
+    point3 = Point("DATOS_DESTILACION_PROCESADOS").field("TEMPERATURA", float(data_frame['TEMP'].values[-1])).field("PRESION", float(data_frame['PRES'].values[-1]))
+    write_api.write("DESTILACION", my_org, point3)
+    print()
+    print("ENVIO DE DATOS PROCESADOS CON EXITO---->BUCKET---FERMENTACION,DESTILACION.")
+    print()
+    print()
+    #client.close()
+    return
+
+    ###########################################CREAR BUCKET EN INFLUXDB###########################################3
+
+#def analisis_de_datos(a):
+ #   #lista = []
+    
+  #  return
+
+#def envio_de_datos_procesados(b):
+    
+   # lista = []
+    
+ #   return
+
+
+###############################################  ACTUALIZACION DE DATOS ###################################
+
 
 def process_function(msg):
   mesage = msg.decode("utf-8")
