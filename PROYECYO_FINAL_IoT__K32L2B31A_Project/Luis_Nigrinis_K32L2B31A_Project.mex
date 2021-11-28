@@ -133,16 +133,6 @@
                         <pin_feature name="direction" value="INPUT"/>
                      </pin_features>
                   </pin>
-                  <pin peripheral="GPIOB" signal="GPIO, 2" pin_num="37" pin_signal="LCD_P2/ADC0_SE12/PTB2/I2C0_SCL/TPM2_CH0">
-                     <pin_features>
-                        <pin_feature name="direction" value="OUTPUT"/>
-                     </pin_features>
-                  </pin>
-                  <pin peripheral="GPIOB" signal="GPIO, 3" pin_num="38" pin_signal="LCD_P3/ADC0_SE13/PTB3/I2C0_SDA/TPM2_CH1">
-                     <pin_features>
-                        <pin_feature name="direction" value="INPUT"/>
-                     </pin_features>
-                  </pin>
                   <pin peripheral="GPIOC" signal="GPIO, 1" pin_num="44" pin_signal="LCD_P21/ADC0_SE15/PTC1/LLWU_P6/RTC_CLKIN/I2C1_SCL/TPM0_CH0">
                      <pin_features>
                         <pin_feature name="direction" value="INPUT"/>
@@ -724,16 +714,6 @@
                <description></description>
                <options/>
                <dependencies>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="ADC0.adc_se.3" description="Signal SE of the channel 3 of the peripheral ADC0 is not routed." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
-                     <feature name="routed" evaluation="">
-                        <data type="Boolean">true</data>
-                     </feature>
-                  </dependency>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="ADC0.adc_se.26" description="Signal SE of the channel 26 of the peripheral ADC0 is not routed." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
-                     <feature name="routed" evaluation="">
-                        <data type="Boolean">true</data>
-                     </feature>
-                  </dependency>
                   <dependency resourceType="PeripheralUnifiedSignal" resourceId="ADC0.adc_se.14" description="Signal SE of the channel 14 of the peripheral ADC0 is not routed." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="routed" evaluation="">
                         <data type="Boolean">true</data>
@@ -804,26 +784,10 @@
                            <struct name="0">
                               <setting name="channelName" value=""/>
                               <setting name="enableDifferentialConversion" value="false"/>
-                              <setting name="channelNumber" value="SE.3"/>
-                              <setting name="enableInterruptOnConversionCompleted" value="false"/>
-                              <setting name="channelGroup" value="0"/>
-                              <setting name="initializeChannel" value="false"/>
-                           </struct>
-                           <struct name="1">
-                              <setting name="channelName" value=""/>
-                              <setting name="enableDifferentialConversion" value="false"/>
-                              <setting name="channelNumber" value="SE.26"/>
-                              <setting name="enableInterruptOnConversionCompleted" value="false"/>
-                              <setting name="channelGroup" value="0"/>
-                              <setting name="initializeChannel" value="false"/>
-                           </struct>
-                           <struct name="2">
-                              <setting name="channelName" value=""/>
-                              <setting name="enableDifferentialConversion" value="false"/>
                               <setting name="channelNumber" value="SE.14"/>
                               <setting name="enableInterruptOnConversionCompleted" value="false"/>
                               <setting name="channelGroup" value="0"/>
-                              <setting name="initializeChannel" value="true"/>
+                              <setting name="initializeChannel" value="false"/>
                            </struct>
                         </array>
                      </config_set>

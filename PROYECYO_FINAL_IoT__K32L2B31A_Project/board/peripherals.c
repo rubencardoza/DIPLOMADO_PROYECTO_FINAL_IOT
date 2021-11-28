@@ -115,37 +115,13 @@ instance:
       - 0:
         - channelName: ''
         - enableDifferentialConversion: 'false'
-        - channelNumber: 'SE.3'
-        - enableInterruptOnConversionCompleted: 'false'
-        - channelGroup: '0'
-        - initializeChannel: 'false'
-      - 1:
-        - channelName: ''
-        - enableDifferentialConversion: 'false'
-        - channelNumber: 'SE.26'
-        - enableInterruptOnConversionCompleted: 'false'
-        - channelGroup: '0'
-        - initializeChannel: 'false'
-      - 2:
-        - channelName: ''
-        - enableDifferentialConversion: 'false'
         - channelNumber: 'SE.14'
         - enableInterruptOnConversionCompleted: 'false'
         - channelGroup: '0'
-        - initializeChannel: 'true'
+        - initializeChannel: 'false'
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
-adc16_channel_config_t ADC0_channelsConfig[3] = {
-  {
-    .channelNumber = 3U,
-    .enableDifferentialConversion = false,
-    .enableInterruptOnConversionCompleted = false,
-  },
-  {
-    .channelNumber = 26U,
-    .enableDifferentialConversion = false,
-    .enableInterruptOnConversionCompleted = false,
-  },
+adc16_channel_config_t ADC0_channelsConfig[1] = {
   {
     .channelNumber = 14U,
     .enableDifferentialConversion = false,
@@ -173,8 +149,6 @@ static void ADC0_init(void) {
   ADC16_EnableHardwareTrigger(ADC0_PERIPHERAL, false);
   /* Configure channel multiplexing mode */
   ADC16_SetChannelMuxMode(ADC0_PERIPHERAL, ADC0_muxMode);
-  /* Initialize channel */
-  ADC16_SetChannelConfig(ADC0_PERIPHERAL, ADC0_CH2_CONTROL_GROUP, &ADC0_channelsConfig[2]);
 }
 
 /***********************************************************************************************************************

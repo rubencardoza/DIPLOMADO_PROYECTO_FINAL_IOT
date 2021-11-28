@@ -21,6 +21,7 @@
 #include "botones.h"
 #include "irq_lptmr0.h"
 #include "fsl_gpio.h"
+#include "sensor_ultrasonico_dp1.h"
 
 
 
@@ -52,13 +53,12 @@ const char APN_APP[]="internet.colombiamovil.com.co";
 /*******************************************************************************
  * External vars
  ******************************************************************************/
-extern uint32_t adc_sensor_de_luz;
-extern float sensor_1_ultrasonico;
-extern float sensor_2_ultrasonico;
+
+extern volatile float sensor_1_ultrasonico;
+
 extern uint32_t minutos;
 extern uint32_t segundos;
 extern uint32_t horas;
-extern float sensor_temperatura;
 extern uint32_t adc_sensor_de_presion;
 
 /*******************************************************************************
@@ -169,7 +169,7 @@ enum{
 };
 
 void Modem_Init(void){
-	modemSt = ST_MOD_CFG;
+	modemSt = ST_MOD_PUBLIC_DAT;
 }
 
 
@@ -250,9 +250,9 @@ void Modem_Task_Run(void){
 	case ST_MOD_PUBLIC_DAT:
 		encender_led_verde();
 		encender_led_rojo();
-		printf("Nivel1Deposito,%0.1f,Nivel2Deposito,%0.1f,Fermentacion,%d : %d : %d,Temperatura,%0.1f,Presion,%d\r\n",sensor_1_ultrasonico,sensor_2_ultrasonico,horas,minutos,segundos,sensor_temperatura,adc_sensor_de_presion);
+		printf("Nivel1Deposito,%0.1f,Fermentacion,%d,%d,%d,Presion,%d\r\n",sensor_1_ultrasonico,horas,minutos,segundos,adc_sensor_de_presion);
 		putchar(CNTL_Z);
-		Modem_Rta_Cmd(6000,"OK",ST_MOD_PUBLIC_DAT,ST_MOD_CONN_PUB);
+		Modem_Rta_Cmd(10000,"OK",ST_MOD_PUBLIC_DAT,ST_MOD_PUBLIC_DAT);
 		//recibiMsgQtt = 0;*/
 		//Modem_Rta_Cmd_2("RING",ST_MOD_RING_ON);
 		//Key_Task_Run();
@@ -316,7 +316,6 @@ void Key_Task_Run(void){
  	 }
  	if(tiempopresionado==1000){
  	 	  if(!B1 && !estado){
- 	 		  printf("%u\r\n",adc_sensor_de_luz);
  	 		  putchar(CNTL_Z);
  	 		  Modem_Rta_Cmd(10000,"OK",ST_MOD_PUBLIC_DAT,ST_MOD_PUBLIC_DAT);
  	 		  estado=1;

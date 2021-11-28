@@ -110,8 +110,6 @@ BOARD_InitPins:
 - pin_list:
   - {pin_num: '35', peripheral: GPIOB, signal: 'GPIO, 0', pin_signal: LCD_P0/ADC0_SE8/PTB0/LLWU_P5/I2C0_SCL/TPM1_CH0, direction: OUTPUT}
   - {pin_num: '36', peripheral: GPIOB, signal: 'GPIO, 1', pin_signal: LCD_P1/ADC0_SE9/PTB1/I2C0_SDA/TPM1_CH1, direction: INPUT}
-  - {pin_num: '37', peripheral: GPIOB, signal: 'GPIO, 2', pin_signal: LCD_P2/ADC0_SE12/PTB2/I2C0_SCL/TPM2_CH0, direction: OUTPUT}
-  - {pin_num: '38', peripheral: GPIOB, signal: 'GPIO, 3', pin_signal: LCD_P3/ADC0_SE13/PTB3/I2C0_SDA/TPM2_CH1, direction: INPUT}
   - {pin_num: '44', peripheral: GPIOC, signal: 'GPIO, 1', pin_signal: LCD_P21/ADC0_SE15/PTC1/LLWU_P6/RTC_CLKIN/I2C1_SCL/TPM0_CH0, direction: INPUT}
   - {pin_num: '43', peripheral: ADC0, signal: 'SE, 14', pin_signal: LCD_P20/ADC0_SE14/PTC0/EXTRG_IN/USB_SOF_OUT/CMP0_OUT}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
@@ -145,20 +143,6 @@ void BOARD_InitPins(void)
     /* Initialize GPIO functionality on pin PTB1 (pin 36)  */
     GPIO_PinInit(BOARD_GPIOB1_GPIO, BOARD_GPIOB1_PIN, &GPIOB1_config);
 
-    gpio_pin_config_t GPIOB2_config = {
-        .pinDirection = kGPIO_DigitalOutput,
-        .outputLogic = 0U
-    };
-    /* Initialize GPIO functionality on pin PTB2 (pin 37)  */
-    GPIO_PinInit(BOARD_GPIOB2_GPIO, BOARD_GPIOB2_PIN, &GPIOB2_config);
-
-    gpio_pin_config_t GPIOB3_config = {
-        .pinDirection = kGPIO_DigitalInput,
-        .outputLogic = 0U
-    };
-    /* Initialize GPIO functionality on pin PTB3 (pin 38)  */
-    GPIO_PinInit(BOARD_GPIOB3_GPIO, BOARD_GPIOB3_PIN, &GPIOB3_config);
-
     gpio_pin_config_t GPIOC1_config = {
         .pinDirection = kGPIO_DigitalInput,
         .outputLogic = 0U
@@ -171,12 +155,6 @@ void BOARD_InitPins(void)
 
     /* PORTB1 (pin 36) is configured as PTB1 */
     PORT_SetPinMux(BOARD_GPIOB1_PORT, BOARD_GPIOB1_PIN, kPORT_MuxAsGpio);
-
-    /* PORTB2 (pin 37) is configured as PTB2 */
-    PORT_SetPinMux(BOARD_GPIOB2_PORT, BOARD_GPIOB2_PIN, kPORT_MuxAsGpio);
-
-    /* PORTB3 (pin 38) is configured as PTB3 */
-    PORT_SetPinMux(BOARD_GPIOB3_PORT, BOARD_GPIOB3_PIN, kPORT_MuxAsGpio);
 
     /* PORTC0 (pin 43) is configured as ADC0_SE14 */
     PORT_SetPinMux(PORTC, 0U, kPORT_PinDisabledOrAnalog);

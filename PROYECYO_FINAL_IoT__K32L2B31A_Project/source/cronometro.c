@@ -43,7 +43,7 @@ uint32_t horas=0;
 
 
 void tiempo_fermentacion(void){
-	  if(GPIO_PinRead(GPIOC,1)!=0){
+	  if(GPIO_PinRead(GPIOC,1)==0){
 		   		tiempofermentacion=0;
 		   		minutos=0;
 		   		horas=0;
