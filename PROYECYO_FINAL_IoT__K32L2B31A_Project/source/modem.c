@@ -60,6 +60,7 @@ extern uint32_t minutos;
 extern uint32_t segundos;
 extern uint32_t horas;
 extern uint32_t adc_sensor_de_presion;
+extern float sensor_temperatura;
 
 /*******************************************************************************
  * Local vars
@@ -248,9 +249,10 @@ void Modem_Task_Run(void){
 		Modem_Rta_Cmd(5000,">",ST_MOD_PUBLIC_DAT,ST_MOD_CONN_TOPIC);
 	break;
 	case ST_MOD_PUBLIC_DAT:
-		encender_led_verde();
 		encender_led_rojo();
-		printf("Nivel1Deposito,%0.1f,Fermentacion,%d,%d,%d,Presion,%d\r\n",sensor_1_ultrasonico,horas,minutos,segundos,adc_sensor_de_presion);
+		printf("%0.2f,%d,%d,%d,%0.2f\r\n",sensor_1_ultrasonico,horas,minutos,segundos,sensor_temperatura);
+		//printf("%0.2f\r\n",sensor_temperatura);
+
 		putchar(CNTL_Z);
 		Modem_Rta_Cmd(10000,"OK",ST_MOD_PUBLIC_DAT,ST_MOD_PUBLIC_DAT);
 		//recibiMsgQtt = 0;*/

@@ -29,6 +29,7 @@
 #include "sensor_ultrasonico_dp1.h"
 
 #include "cronometro.h"
+#include "control_temperatura.h"
 
 #include "sensor_hk1100c.h"
 
@@ -105,6 +106,7 @@ int main(void) {
     	Sensorultrasonico_1_Task_Run();
     	Modem_Task_Run();
     	tiempo_fermentacion();
+    	Sensor_temperatura_Task_Run();
     	//Sensortemperatura_Task_Run();
     	//SensorPresion_Task_Run();
 
