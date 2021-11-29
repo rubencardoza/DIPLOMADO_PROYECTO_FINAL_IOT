@@ -21,15 +21,16 @@
 #include "stdbool.h"
 
 #include "leds.h"
-#include "sensor_de_luz.h"
+
 #include "botones.h"
 #include "modem.h"
 #include "irq_lptmr0.h"
 #include "irq_lpuart0.h"
 #include "sensor_ultrasonico_dp1.h"
-#include "sensor_ultrasonico_dp2.h"
+
 #include "cronometro.h"
-#include "sensor_temperatura.h"
+#include "control_temperatura.h"
+
 #include "sensor_hk1100c.h"
 
 
@@ -95,22 +96,19 @@ int main(void) {
     Timer_Init();
     Modem_Init();
     Key_Task_Init();
-    SensorLuz_Init();
     Alarma_Init();
+
     Sensorultrasonico_1_init();
-    Sensorultrasonico_2_init();
-    sensorDetemperaturaIniciarCaptura();
 	SensorPresion_Init();
 
 
     while(1) { // multiTaks de tareas por Polling
-    	Modem_Task_Run();
-    	SensorLuz_Task_Run();
     	Sensorultrasonico_1_Task_Run();
-    	Sensorultrasonico_2_Task_Run();
+    	Modem_Task_Run();
     	tiempo_fermentacion();
-    	Sensortemperatura_Task_Run();
-    	SensorPresion_Task_Run();
+    	Sensor_temperatura_Task_Run();
+    	//Sensortemperatura_Task_Run();
+    	//SensorPresion_Task_Run();
 
     }
     return 0 ;
