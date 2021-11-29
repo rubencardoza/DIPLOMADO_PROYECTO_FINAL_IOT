@@ -44,7 +44,7 @@
  * Private Source Code
  ******************************************************************************/
  void sensorDePresionIniciarCaptura(void){
- 	ADC16_SetChannelConfig(SENSOR_DE_PRESION_ADC16_BASE,SENSOR_DE_PRESION_ADC16_CHANNEL_GROUP,&ADC0_channelsConfig[2]);
+ 	ADC16_SetChannelConfig(SENSOR_DE_PRESION_ADC16_BASE,SENSOR_DE_PRESION_ADC16_CHANNEL_GROUP,&ADC0_channelsConfig[0]);
  }
  /*---------------------------------------------------------------*/
  void sensorDePresionEsperarResultado(void){
