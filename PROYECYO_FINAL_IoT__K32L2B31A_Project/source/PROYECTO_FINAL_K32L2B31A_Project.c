@@ -33,7 +33,19 @@
 
 #include "sensor_hk1100c.h"
 
+#include "fsl_spi.h"
+#include "pin_mux.h"
+#include "clock_config.h"
+#include "board.h"
+#include "fsl_debug_console.h"
 
+#define EXAMPLE_SPI_MASTER              SPI0
+#define EXAMPLE_SPI_MASTER_SOURCE_CLOCK kCLOCK_BusClk
+#define EXAMPLE_SPI_MASTER_CLK_FREQ     CLOCK_GetFreq(kCLOCK_BusClk)
+
+#define BUFFER_SIZE (2)
+static uint8_t srcBuff[BUFFER_SIZE];
+static uint16_t destBuff[BUFFER_SIZE];
 
 // Para modulo Alarma
 volatile uint32_t segAct=0;
@@ -101,14 +113,78 @@ int main(void) {
     Sensorultrasonico_1_init();
 	SensorPresion_Init();
 
+	///////////////////////////////////////////////////////////////////////////////////////////
+    spi_master_config_t userConfig = {0};
+    uint32_t srcFreq               = 0;
+    //uint32_t i                     = 0;
+    //uint32_t err                   = 0;
+    spi_transfer_t xfer            = {0};
+
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
+    BOARD_InitDebugConsole();
+    PRINTF("\n\rMaster Start...\n\r");
+    /*
+     * userConfig.enableStopInWaitMode = false;
+     * userConfig.polarity = kSPI_ClockPolarityActiveHigh;
+     * userConfig.phase = kSPI_ClockPhaseFirstEdge;
+     * userConfig.direction = kSPI_MsbFirst;
+     * userConfig.dataMode = kSPI_8BitMode;
+     * userConfig.txWatermark = kSPI_TxFifoOneHalfEmpty;
+     * userConfig.rxWatermark = kSPI_RxFifoOneHalfFull;
+     * userConfig.pinMode = kSPI_PinModeNormal;
+     * userConfig.outputMode = kSPI_SlaveSelectAutomaticOutput;
+     * userConfig.baudRate_Bps = 500000U;
+     */
+    SPI_MasterGetDefaultConfig(&userConfig);
+    userConfig.dataMode = kSPI_16BitMode;
+    userConfig.outputMode = kSPI_SlaveSelectAutomaticOutput;
+    userConfig.direction = kSPI_MsbFirst;
+    userConfig.pinMode = kSPI_PinModeNormal;
+
+    srcFreq = EXAMPLE_SPI_MASTER_CLK_FREQ;
+    SPI_MasterInit(EXAMPLE_SPI_MASTER, &userConfig, srcFreq);
+
+	//////////////////////////////////////////////////////////////////////////////////////////
+    uint16_t dato_original;
+    uint16_t dato_entero;
+    uint16_t dato_final_entero;
+    uint16_t dato_final_decimal;
+    uint16_t dato_decimal ;
+    float temperatura_grados ;
+
 
     while(1) { // multiTaks de tareas por Polling
-    	Sensorultrasonico_1_Task_Run();
-    	Modem_Task_Run();
-    	tiempo_fermentacion();
-    	Sensor_temperatura_Task_Run();
+    	//Sensorultrasonico_1_Task_Run();
+    	//Modem_Task_Run();
+    	//tiempo_fermentacion();
+    	//Sensor_temperatura_Task_Run();
     	//Sensortemperatura_Task_Run();
     	//SensorPresion_Task_Run();
+
+
+
+    	if(tiempocapturadato_echo==1000){
+    		 /*Start Transfer*/
+    		xfer.txData   = srcBuff;
+    		xfer.rxData   = destBuff;
+    		xfer.dataSize = BUFFER_SIZE;
+    		SPI_MasterTransferBlocking(EXAMPLE_SPI_MASTER, &xfer);
+    		encender_led_rojo();
+    	}
+    	if(tiempocapturadato_echo > 2000){
+    		apagar_led_rojo();
+    		tiempocapturadato_echo = 0;
+    		dato_original = destBuff[0] ;
+    		dato_decimal = dato_original & 0x32;
+    		dato_final_decimal  = dato_decimal>>3;
+    		dato_entero = dato_original & 0b0000111111100000;
+    		dato_final_entero = dato_entero>>5;
+    		temperatura_grados = dato_final_entero + dato_final_decimal*0.1;
+    		//printf("16_bits---%d\r\n",dato_original);
+    		printf("%0.2f\r\n",temperatura_grados);
+    	}
+
 
     }
     return 0 ;
