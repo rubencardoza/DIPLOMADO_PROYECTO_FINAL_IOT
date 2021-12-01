@@ -52,36 +52,25 @@ void Sensorultrasonico_1_init(void){
 }
 
  float Sensorultrasonico_1_obtenerdato(void){
-	 if(tiemposensorultrasonico==0){
+	 if(tiemposensorultrasonico==10){
 		 GPIO_PinWrite(GPIOB,0,0);
-	 }
-	 if(tiemposensorultrasonico==350){
-		 //encender_led_rojo();
 		 cont=0;
+	 }
+	 if(tiemposensorultrasonico==60){
 		 GPIO_PinWrite(GPIOB,0,1);	//////pulso del trid
 	 }
-	 if(tiemposensorultrasonico==351){
-		//apagar_led_rojo();
-	 	GPIO_PinWrite(GPIOB,0,0);
-	 	//tiemposensorultrasonico=0;
+	 if(tiemposensorultrasonico > 62 && tiemposensorultrasonico < 110){
+		 GPIO_PinWrite(GPIOB,0,0);
+		 if(GPIO_PinRead(GPIOB,1)!=0){
+	 		 		 cont++;
+	 	}
 	 }
-	 if(GPIO_PinRead(GPIOB,1)!=0){
-	 		 cont++;
-	 }
-	 if(tiemposensorultrasonico>450){
+	 if(tiemposensorultrasonico > 111){
 		 distancia = cont;
 		 tiemposensorultrasonico=0;
 	 }
-
-	/* if(tiempocapturadato_echo>150){
-		 distancia = cont;
-		 tiempocapturadato_echo=0;
-	 }*/
 	return(distancia);
 }
-
-
-
 
 void Sensorultrasonico_1_Task_Run(void){
 	  sensor_1_ultrasonico=Sensorultrasonico_1_obtenerdato();
