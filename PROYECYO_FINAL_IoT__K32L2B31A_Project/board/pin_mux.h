@@ -109,6 +109,42 @@ void BOARD_InitBootPins(void);
 #define BOARD_GPIOD7_PIN_MASK (1U << 7U)      /*!<@brief PORT pin mask */
                                               /* @} */
 
+/*! @name PORTC7 (number 56), J1[11]/USB_SOF_OUT/LCD_P27
+  @{ */
+
+/* Symbols to be used with PORT driver */
+#define BOARD_LCD_P27_PORT PORTC               /*!<@brief PORT peripheral base pointer */
+#define BOARD_LCD_P27_PIN 7U                   /*!<@brief PORT pin number */
+#define BOARD_LCD_P27_PIN_MASK (1U << 7U)      /*!<@brief PORT pin mask */
+                                               /* @} */
+
+/*! @name PORTC6 (number 55), J1[9]/LCD_P26
+  @{ */
+
+/* Symbols to be used with PORT driver */
+#define BOARD_LCD_P26_PORT PORTC               /*!<@brief PORT peripheral base pointer */
+#define BOARD_LCD_P26_PIN 6U                   /*!<@brief PORT pin number */
+#define BOARD_LCD_P26_PIN_MASK (1U << 6U)      /*!<@brief PORT pin mask */
+                                               /* @} */
+
+/*! @name PORTC4 (number 53), J1[7]/LCD_P24
+  @{ */
+
+/* Symbols to be used with PORT driver */
+#define BOARD_LCD_P24_PORT PORTC               /*!<@brief PORT peripheral base pointer */
+#define BOARD_LCD_P24_PIN 4U                   /*!<@brief PORT pin number */
+#define BOARD_LCD_P24_PIN_MASK (1U << 4U)      /*!<@brief PORT pin mask */
+                                               /* @} */
+
+/*! @name PORTC5 (number 54), J1[15]/INT1_ACCEL/LCD_P25
+  @{ */
+
+/* Symbols to be used with PORT driver */
+#define BOARD_INT1_ACCEL_PORT PORTC               /*!<@brief PORT peripheral base pointer */
+#define BOARD_INT1_ACCEL_PIN 5U                   /*!<@brief PORT pin number */
+#define BOARD_INT1_ACCEL_PIN_MASK (1U << 5U)      /*!<@brief PORT pin mask */
+                                                  /* @} */
+
 /*!
  * @brief Configures pin routing and optionally pin electrical features.
  *
@@ -282,20 +318,6 @@ void BOARD_InitUSBPins(void);
 #define BOARD_INT2_ACCEL_PORT PORTD               /*!<@brief PORT peripheral base pointer */
 #define BOARD_INT2_ACCEL_PIN 1U                   /*!<@brief PORT pin number */
 #define BOARD_INT2_ACCEL_PIN_MASK (1U << 1U)      /*!<@brief PORT pin mask */
-                                                  /* @} */
-
-/*! @name PORTC5 (number 54), J1[15]/INT1_ACCEL/LCD_P25
-  @{ */
-
-/* Symbols to be used with GPIO driver */
-#define BOARD_INT1_ACCEL_FGPIO FGPIOC             /*!<@brief FGPIO peripheral base pointer */
-#define BOARD_INT1_ACCEL_GPIO GPIOC               /*!<@brief GPIO peripheral base pointer */
-#define BOARD_INT1_ACCEL_GPIO_PIN_MASK (1U << 5U) /*!<@brief GPIO pin mask */
-
-/* Symbols to be used with PORT driver */
-#define BOARD_INT1_ACCEL_PORT PORTC               /*!<@brief PORT peripheral base pointer */
-#define BOARD_INT1_ACCEL_PIN 5U                   /*!<@brief PORT pin number */
-#define BOARD_INT1_ACCEL_PIN_MASK (1U << 5U)      /*!<@brief PORT pin mask */
                                                   /* @} */
 
 /*!

@@ -35,6 +35,8 @@
 
 
 
+
+
 // Para modulo Alarma
 volatile uint32_t segAct=0;
 volatile uint32_t tiempoAct=0;
@@ -72,24 +74,6 @@ void BOARD_Init(void){
 
 
 
-// Scratch
-
-	// 1. crear codigo nuevo
-	// 2. Se compilar
-	// 3. Se prueba en el board
-	// 4. Se depura
-	// 5.Funciona??? NO --> va al punto 1.
-	// Funciona??? SI ---> punto 6.
-	// 6. Backup Version
-	// 7.Modularizar el modulo que Funciono
-	// 8. Ensayar el Funcionamiento ya modularizado
-	// 9. Comentar y organizar
-	// 10.Optimizar codigo si es necesario
-	// 11. Clean y Build
-	// 12. Liberar version V2.0
-
-//end Scratf
-
 //  main
 int main(void) {
 	BOARD_Init();
@@ -97,18 +81,28 @@ int main(void) {
     Modem_Init();
     Key_Task_Init();
     Alarma_Init();
-
     Sensorultrasonico_1_init();
+    Sensor_temperatura_Init();
 	SensorPresion_Init();
 
+	///////////////////////////////////////////////////////////////////////////////////////////
+
+	//////////////////////////////////////////////////////////////////////////////////////////
 
     while(1) { // multiTaks de tareas por Polling
-    	Sensorultrasonico_1_Task_Run();
     	Modem_Task_Run();
-    	tiempo_fermentacion();
-    	Sensor_temperatura_Task_Run();
-    	//Sensortemperatura_Task_Run();
-    	//SensorPresion_Task_Run();
+    	if(tiempo_captura_datos > 0 && tiempo_captura_datos < 3000){
+    		tiempo_fermentacion();
+    		Sensor_temperatura_Task_Run();
+         	SensorPresion_Task_Run();
+    	}
+    	if(tiempo_captura_datos > 3000 && tiempo_captura_datos < 4000){
+    		Sensorultrasonico_1_Task_Run();
+    	}
+    	if(tiempo_captura_datos == 5000){
+    		tiempo_captura_datos = 0 ;
+    	}
+
 
     }
     return 0 ;
