@@ -1,3 +1,5 @@
+
+
 /*! @file : K32L2B31A_Project.c
  * @author  Luis Carlos Niginis Alvarez
  * @version 0.0.000
@@ -31,11 +33,16 @@
 #include "cronometro.h"
 #include "control_temperatura.h"
 
-#include "sensor_hk1100c.h"
+
+#include "fsl_adc16.h"
+#include "sensor_MQ3.h"
 
 
 
 
+#define DEMO_ADC16_BASE          ADC0
+#define DEMO_ADC16_CHANNEL_GROUP 0U
+#define DEMO_ADC16_USER_CHANNEL  23U /* PTE30, ADC0_SE23 */
 
 // Para modulo Alarma
 volatile uint32_t segAct=0;
@@ -83,20 +90,24 @@ int main(void) {
     Alarma_Init();
     Sensorultrasonico_1_init();
     Sensor_temperatura_Init();
-	SensorPresion_Init();
+    sensor_MQ3_Init();
 
 	///////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
 
 	//////////////////////////////////////////////////////////////////////////////////////////
 
     while(1) { // multiTaks de tareas por Polling
 
-    	//Modem_Task_Run();
-    	SensorPresion_Task_Run();
-    	/*if(tiempo_captura_datos > 0 && tiempo_captura_datos < 3000){
+    	Modem_Task_Run();
+    	if(tiempo_captura_datos > 0 && tiempo_captura_datos < 3000){
     		tiempo_fermentacion();
     		tiempo_destilacion();
     		Sensor_temperatura_Task_Run();
+    		sensor_MQ3_Task_Run();
 
     	}
     	if(tiempo_captura_datos > 3000 && tiempo_captura_datos < 4000){
@@ -104,8 +115,7 @@ int main(void) {
     	}
     	if(tiempo_captura_datos > 4000){
     		tiempo_captura_datos = 0 ;
-    	}*/
-
+    	}
     }
     return 0 ;
 }
