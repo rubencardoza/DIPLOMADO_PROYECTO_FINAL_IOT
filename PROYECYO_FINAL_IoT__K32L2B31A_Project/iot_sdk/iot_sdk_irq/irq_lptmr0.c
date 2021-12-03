@@ -40,7 +40,8 @@
  volatile uint32_t tiempo_capturadato_temperatura=0;
  volatile uint32_t tiempofermentacion=0;
  volatile uint32_t tiempodestilacion=0;
- volatile uint32_t tiempo_captura_datos;
+ volatile uint32_t tiempo_captura_datos=0;
+ volatile uint32_t tiempo_envio_a_rabbit=0;
 
 
 
@@ -64,6 +65,7 @@ void LPTMR0_IRQHANDLER(void) {
    tiempo_captura_datos++;
    tiempodestilacion++;
    tiempopresionado++;
+   tiempo_envio_a_rabbit++;
 
 
    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F

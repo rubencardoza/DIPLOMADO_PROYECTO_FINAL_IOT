@@ -33,35 +33,42 @@
 /*******************************************************************************
  * Local vars
  ******************************************************************************/
-uint32_t segundos;
-uint32_t minutos=0;
-uint32_t horas=0;
-uint32_t segundos_destilacion;
-uint32_t minutos_destilacion=0;
-uint32_t horas_destilacion=0;
+uint8_t segundos;
+uint8_t minutos=0;
+uint8_t horas=0;
+uint8_t segundos_destilacion;
+uint8_t minutos_destilacion=0;
+uint8_t horas_destilacion=0;
+uint8_t pulsador = 0;
 
 /*******************************************************************************
  * Private Source Code
  ******************************************************************************/
 
 void tiempo_fermentacion(void){
-	  if(GPIO_PinRead(GPIOC,1)==0){
-		   		tiempofermentacion=0;
-		   		minutos=0;
-		   		horas=0;
-	  	}else{
-		    	segundos=tiempofermentacion*0.001;
-		   		if(segundos==60){
-		   			minutos++;
-		   			if(minutos==60){
-		   				horas++;
-		   				minutos=0;
-		   				segundos=0;
-		   			}
-		   			segundos=0;
-		   			tiempofermentacion=0;
-		   		}
-		   	}
+
+	if(GPIO_PinRead(GPIOC,1)==0){
+		  pulsador = +1;
+	}
+	if(pulsador % 2 == 0){
+   		tiempofermentacion=0;
+		segundos=0;
+		minutos=0;
+		horas=0;
+	}
+	if(pulsador%2==1  && GPIO_PinRead(GPIOC,1)!=0){
+		segundos=tiempofermentacion*0.001;
+		if(segundos==60){
+			minutos++;
+			if(minutos==60){
+				horas++;
+   				minutos=0;
+				segundos=0;
+			}
+			segundos=0;
+			tiempofermentacion=0;
+		}
+	}
 }
 
 

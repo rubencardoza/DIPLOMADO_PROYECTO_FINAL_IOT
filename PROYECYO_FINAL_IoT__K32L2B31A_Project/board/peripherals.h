@@ -10,7 +10,6 @@
  * Included files
  **********************************************************************************************************************/
 #include "fsl_common.h"
-#include "fsl_adc16.h"
 #include "fsl_lptmr.h"
 #include "fsl_lpuart.h"
 #include "fsl_clock.h"
@@ -23,14 +22,6 @@ extern "C" {
  * Definitions
  **********************************************************************************************************************/
 /* Definitions for BOARD_InitPeripherals functional group */
-/* Alias for ADC0 peripheral */
-#define ADC0_PERIPHERAL ADC0
-/* ADC0 interrupt vector ID (number). */
-#define ADC0_IRQN ADC0_IRQn
-/* ADC0 interrupt handler identifier. */
-#define ADC0_IRQHANDLER ADC0_IRQHandler
-/* Channel 0 (SE.14) conversion control group. */
-#define ADC0_CH0_CONTROL_GROUP 0
 /* BOARD_InitPeripherals defines for LPTMR0 */
 /* Definition of peripheral ID */
 #define LPTMR0_PERIPHERAL LPTMR0
@@ -58,9 +49,6 @@ extern "C" {
 /***********************************************************************************************************************
  * Global variables
  **********************************************************************************************************************/
-extern adc16_channel_config_t ADC0_channelsConfig[1];
-extern const adc16_config_t ADC0_config;
-extern const adc16_channel_mux_mode_t ADC0_muxMode;
 extern const lptmr_config_t LPTMR0_config;
 extern const lpuart_config_t LPUART0_config;
 
