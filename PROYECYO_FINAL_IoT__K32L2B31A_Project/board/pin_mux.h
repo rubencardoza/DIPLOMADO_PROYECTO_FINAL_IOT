@@ -67,48 +67,6 @@ void BOARD_InitBootPins(void);
 #define BOARD_GPIOC1_PIN_MASK (1U << 1U)      /*!<@brief PORT pin mask */
                                               /* @} */
 
-/*! @name PORTE1 (number 2), J2[20]/D15/I2C1_SCL/LCD_P49
-  @{ */
-
-/* Symbols to be used with GPIO driver */
-#define BOARD_GPIOE1_FGPIO FGPIOE             /*!<@brief FGPIO peripheral base pointer */
-#define BOARD_GPIOE1_GPIO GPIOE               /*!<@brief GPIO peripheral base pointer */
-#define BOARD_GPIOE1_GPIO_PIN_MASK (1U << 1U) /*!<@brief GPIO pin mask */
-
-/* Symbols to be used with PORT driver */
-#define BOARD_GPIOE1_PORT PORTE               /*!<@brief PORT peripheral base pointer */
-#define BOARD_GPIOE1_PIN 1U                   /*!<@brief PORT pin number */
-#define BOARD_GPIOE1_PIN_MASK (1U << 1U)      /*!<@brief PORT pin mask */
-                                              /* @} */
-
-/*! @name PORTE0 (number 1), J2[18]/J4[9]/D14/I2C1_SDA/CMP0_OUT/LCD_P48
-  @{ */
-
-/* Symbols to be used with GPIO driver */
-#define BOARD_GPIOE0_FGPIO FGPIOE             /*!<@brief FGPIO peripheral base pointer */
-#define BOARD_GPIOE0_GPIO GPIOE               /*!<@brief GPIO peripheral base pointer */
-#define BOARD_GPIOE0_GPIO_PIN_MASK (1U << 0U) /*!<@brief GPIO pin mask */
-
-/* Symbols to be used with PORT driver */
-#define BOARD_GPIOE0_PORT PORTE               /*!<@brief PORT peripheral base pointer */
-#define BOARD_GPIOE0_PIN 0U                   /*!<@brief PORT pin number */
-#define BOARD_GPIOE0_PIN_MASK (1U << 0U)      /*!<@brief PORT pin mask */
-                                              /* @} */
-
-/*! @name PORTD7 (number 64), J2[10]/D12/SPI1_MISO/LCD_P47
-  @{ */
-
-/* Symbols to be used with GPIO driver */
-#define BOARD_GPIOD7_FGPIO FGPIOD             /*!<@brief FGPIO peripheral base pointer */
-#define BOARD_GPIOD7_GPIO GPIOD               /*!<@brief GPIO peripheral base pointer */
-#define BOARD_GPIOD7_GPIO_PIN_MASK (1U << 7U) /*!<@brief GPIO pin mask */
-
-/* Symbols to be used with PORT driver */
-#define BOARD_GPIOD7_PORT PORTD               /*!<@brief PORT peripheral base pointer */
-#define BOARD_GPIOD7_PIN 7U                   /*!<@brief PORT pin number */
-#define BOARD_GPIOD7_PIN_MASK (1U << 7U)      /*!<@brief PORT pin mask */
-                                              /* @} */
-
 /*! @name PORTC7 (number 56), J1[11]/USB_SOF_OUT/LCD_P27
   @{ */
 

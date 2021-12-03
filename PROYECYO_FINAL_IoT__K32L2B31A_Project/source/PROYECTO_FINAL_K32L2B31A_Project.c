@@ -90,19 +90,21 @@ int main(void) {
 	//////////////////////////////////////////////////////////////////////////////////////////
 
     while(1) { // multiTaks de tareas por Polling
-    	Modem_Task_Run();
-    	if(tiempo_captura_datos > 0 && tiempo_captura_datos < 3000){
+
+    	//Modem_Task_Run();
+    	SensorPresion_Task_Run();
+    	/*if(tiempo_captura_datos > 0 && tiempo_captura_datos < 3000){
     		tiempo_fermentacion();
+    		tiempo_destilacion();
     		Sensor_temperatura_Task_Run();
-         	SensorPresion_Task_Run();
+
     	}
     	if(tiempo_captura_datos > 3000 && tiempo_captura_datos < 4000){
     		Sensorultrasonico_1_Task_Run();
     	}
-    	if(tiempo_captura_datos == 5000){
+    	if(tiempo_captura_datos > 4000){
     		tiempo_captura_datos = 0 ;
-    	}
-
+    	}*/
 
     }
     return 0 ;

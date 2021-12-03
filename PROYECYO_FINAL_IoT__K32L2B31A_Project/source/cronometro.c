@@ -13,6 +13,7 @@
 #include "irq_lptmr0.h"
 #include "pin_mux.h"
 #include "board.h"
+#include "leds.h"
 
 /*******************************************************************************
  * Definitions
@@ -35,12 +36,13 @@
 uint32_t segundos;
 uint32_t minutos=0;
 uint32_t horas=0;
-
+uint32_t segundos_destilacion;
+uint32_t minutos_destilacion=0;
+uint32_t horas_destilacion=0;
 
 /*******************************************************************************
  * Private Source Code
  ******************************************************************************/
-
 
 void tiempo_fermentacion(void){
 	  if(GPIO_PinRead(GPIOC,1)==0){
@@ -61,8 +63,32 @@ void tiempo_fermentacion(void){
 		   		}
 		   	}
 }
+
+
+void tiempo_destilacion(void){
+	if(GPIO_PinRead(GPIOE,1)==0){
+		tiempodestilacion=0;
+	   	minutos_destilacion=0;
+	   	horas_destilacion=0;
+	   	encender_led_verde();
+
+	}else{
+	  	segundos_destilacion=tiempodestilacion*0.001;
+		if(segundos_destilacion==60){
+		   minutos_destilacion++;
+		   if(minutos_destilacion==60){
+		   		horas_destilacion++;
+		   		minutos_destilacion=0;
+		   		segundos_destilacion=0;
+		   	}
+		   	segundos_destilacion=0;
+		   	tiempodestilacion=0;
+		 }
+		 if(minutos_destilacion==1){
+		   	apagar_led_verde();
+		 }
+	 }
+}
 /*******************************************************************************
  * Public Source Code
  ******************************************************************************/
-
-

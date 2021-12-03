@@ -59,8 +59,15 @@ extern volatile float sensor_1_ultrasonico;
 extern uint32_t minutos;
 extern uint32_t segundos;
 extern uint32_t horas;
+
+extern uint32_t segundos_destilacion;
+extern uint32_t minutos_destilacion;
+extern uint32_t horas_destilacion;
+
 extern uint32_t adc_sensor_de_presion;
 extern float sensor_temperatura;
+
+
 
 /*******************************************************************************
  * Local vars
@@ -249,8 +256,8 @@ void Modem_Task_Run(void){
 		Modem_Rta_Cmd(5000,">",ST_MOD_PUBLIC_DAT,ST_MOD_CONN_TOPIC);
 	break;
 	case ST_MOD_PUBLIC_DAT:
-		encender_led_rojo();
-		printf("%0.2f,%d,%d,%d,%0.2f\r\n",sensor_1_ultrasonico,horas,minutos,segundos,sensor_temperatura);
+		//encender_led_rojo();
+		printf("%d,%d,%d,%d,%d,%d,%0.2f,%0.2f\r\n",horas,minutos,segundos,horas_destilacion,minutos_destilacion,segundos_destilacion,sensor_temperatura,sensor_1_ultrasonico);
 		//printf("%0.2f\r\n",sensor_temperatura);
 
 		putchar(CNTL_Z);

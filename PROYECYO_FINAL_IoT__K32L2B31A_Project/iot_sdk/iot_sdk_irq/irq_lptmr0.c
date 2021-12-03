@@ -39,6 +39,7 @@
  volatile uint32_t tiemposensorultrasonico=0;
  volatile uint32_t tiempo_capturadato_temperatura=0;
  volatile uint32_t tiempofermentacion=0;
+ volatile uint32_t tiempodestilacion=0;
  volatile uint32_t tiempo_captura_datos;
 
 
@@ -61,6 +62,7 @@ void LPTMR0_IRQHANDLER(void) {
    tiempo_capturadato_temperatura++;
    tiempofermentacion++;
    tiempo_captura_datos++;
+   tiempodestilacion++;
    tiempopresionado++;
 
 

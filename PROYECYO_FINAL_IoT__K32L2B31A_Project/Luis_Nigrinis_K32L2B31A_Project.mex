@@ -144,23 +144,6 @@
                      </pin_features>
                   </pin>
                   <pin peripheral="ADC0" signal="SE, 14" pin_num="43" pin_signal="LCD_P20/ADC0_SE14/PTC0/EXTRG_IN/USB_SOF_OUT/CMP0_OUT"/>
-                  <pin peripheral="GPIOE" signal="GPIO, 1" pin_num="2" pin_signal="LCD_P49/PTE1/SPI1_MOSI/LPUART1_RX/SPI1_MISO/I2C1_SCL">
-                     <pin_features>
-                        <pin_feature name="identifier" value="GPIOE1"/>
-                        <pin_feature name="direction" value="INPUT"/>
-                     </pin_features>
-                  </pin>
-                  <pin peripheral="GPIOE" signal="GPIO, 0" pin_num="1" pin_signal="LCD_P48/PTE0/CLKOUT32K/SPI1_MISO/LPUART1_TX/RTC_CLKOUT/CMP0_OUT/I2C1_SDA">
-                     <pin_features>
-                        <pin_feature name="identifier" value="GPIOE0"/>
-                        <pin_feature name="direction" value="OUTPUT"/>
-                     </pin_features>
-                  </pin>
-                  <pin peripheral="GPIOD" signal="GPIO, 7" pin_num="64" pin_signal="LCD_P47/PTD7/SPI1_MISO/LPUART0_TX/SPI1_MOSI/FXIO0_D7">
-                     <pin_features>
-                        <pin_feature name="direction" value="OUTPUT"/>
-                     </pin_features>
-                  </pin>
                   <pin peripheral="SPI0" signal="MISO" pin_num="56" pin_signal="LCD_P27/CMP0_IN1/PTC7/SPI0_MISO/USB_SOF_OUT/SPI0_MOSI">
                      <pin_features>
                         <pin_feature name="direction" value="INPUT"/>
@@ -181,6 +164,7 @@
                         <pin_feature name="direction" value="OUTPUT"/>
                      </pin_features>
                   </pin>
+                  <pin peripheral="GPIOE" signal="GPIO, 1" pin_num="2" pin_signal="LCD_P49/PTE1/SPI1_MOSI/LPUART1_RX/SPI1_MISO/I2C1_SCL"/>
                </pins>
             </function>
             <function name="BOARD_InitLCDPins">
@@ -695,7 +679,7 @@
                            <setting name="clockSource" value="kADC16_ClockSourceAsynchronousClock"/>
                            <setting name="enableAsynchronousClock" value="true"/>
                            <setting name="clockDivider" value="kADC16_ClockDivider8"/>
-                           <setting name="resolution" value="kADC16_ResolutionSE12Bit"/>
+                           <setting name="resolution" value="kADC16_ResolutionSE10Bit"/>
                            <setting name="longSampleMode" value="kADC16_LongSampleCycle24"/>
                            <setting name="hardwareAverageMode" value="kADC16_HardwareAverageDisabled"/>
                            <setting name="enableHighSpeed" value="false"/>
@@ -725,7 +709,7 @@
                               <setting name="channelNumber" value="SE.14"/>
                               <setting name="enableInterruptOnConversionCompleted" value="false"/>
                               <setting name="channelGroup" value="0"/>
-                              <setting name="initializeChannel" value="false"/>
+                              <setting name="initializeChannel" value="true"/>
                            </struct>
                         </array>
                      </config_set>

@@ -38,6 +38,7 @@ extern volatile uint32_t tiemposensorultrasonico;
 extern volatile uint32_t tiempo_capturadato_temperatura;
 extern volatile uint32_t tiempo_captura_datos;
 extern volatile uint32_t tiempofermentacion;
+extern volatile uint32_t tiempodestilacion;
 extern volatile uint32_t boton1_presionado;
 extern volatile uint32_t estado;
 /*******************************************************************************

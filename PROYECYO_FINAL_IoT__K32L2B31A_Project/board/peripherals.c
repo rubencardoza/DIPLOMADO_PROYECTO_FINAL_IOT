@@ -91,7 +91,7 @@ instance:
       - clockSource: 'kADC16_ClockSourceAsynchronousClock'
       - enableAsynchronousClock: 'true'
       - clockDivider: 'kADC16_ClockDivider8'
-      - resolution: 'kADC16_ResolutionSE12Bit'
+      - resolution: 'kADC16_ResolutionSE10Bit'
       - longSampleMode: 'kADC16_LongSampleCycle24'
       - hardwareAverageMode: 'kADC16_HardwareAverageDisabled'
       - enableHighSpeed: 'false'
@@ -118,7 +118,7 @@ instance:
         - channelNumber: 'SE.14'
         - enableInterruptOnConversionCompleted: 'false'
         - channelGroup: '0'
-        - initializeChannel: 'false'
+        - initializeChannel: 'true'
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
 adc16_channel_config_t ADC0_channelsConfig[1] = {
@@ -133,7 +133,7 @@ const adc16_config_t ADC0_config = {
   .clockSource = kADC16_ClockSourceAsynchronousClock,
   .enableAsynchronousClock = true,
   .clockDivider = kADC16_ClockDivider8,
-  .resolution = kADC16_ResolutionSE12Bit,
+  .resolution = kADC16_ResolutionSE10Bit,
   .longSampleMode = kADC16_LongSampleCycle24,
   .hardwareAverageMode = kADC16_HardwareAverageDisabled,
   .enableHighSpeed = false,
@@ -149,6 +149,8 @@ static void ADC0_init(void) {
   ADC16_EnableHardwareTrigger(ADC0_PERIPHERAL, false);
   /* Configure channel multiplexing mode */
   ADC16_SetChannelMuxMode(ADC0_PERIPHERAL, ADC0_muxMode);
+  /* Initialize channel */
+  ADC16_SetChannelConfig(ADC0_PERIPHERAL, ADC0_CH0_CONTROL_GROUP, &ADC0_channelsConfig[0]);
 }
 
 /***********************************************************************************************************************

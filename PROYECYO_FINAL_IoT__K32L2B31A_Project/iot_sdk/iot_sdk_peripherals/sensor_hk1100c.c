@@ -10,7 +10,7 @@
  * Includes
  ******************************************************************************/
 #include "sensor_hk1100c.h"
-
+#include <stdio.h>
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -78,6 +78,7 @@ void SensorPresion_Init(void){
 
 void SensorPresion_Task_Run(void){
 	  adc_sensor_de_presion=sensorDePresionObtenerdatoADC();
+	  printf("%d\r\n",adc_sensor_de_presion);
 }
 /*******************************************************************************
  * Public Source Code
