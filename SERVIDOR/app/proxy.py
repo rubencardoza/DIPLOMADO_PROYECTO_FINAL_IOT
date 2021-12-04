@@ -6,6 +6,9 @@ import datetime, time
 from influxdb_client import InfluxDBClient, Point, Dialect
 from influxdb_client.client.write_api import SYNCHRONOUS
 
+from pandas.core.frame import DataFrame
+from sklearn.model_selection import train_test_split 
+from sklearn.linear_model import LinearRegression
 
 ################################# CREDENCIALES A RABBIT E INFLUXDB EN PROXI########################
 my_bucket = os.environ.get("DOCKER_INFLUXDB_INIT_BUCKET")
@@ -51,6 +54,7 @@ def guardar_datos_influxdb_sin_procesar(a):
     print()
     solicitar_datos_de_influxdb()
     return
+        
 def solicitar_datos_de_influxdb():
     print("SOLICITAR DATOS ALMACENADOS......")
     print()
@@ -60,10 +64,11 @@ def solicitar_datos_de_influxdb():
                                             '|> keep(columns: ["TEMP", "PRES", "NIV", "FECHA"])')
 
     datos_filtrados = data_frame.to_string()
+    
 
     print("DATAFRAME DE DATOS SOLICITADOS")
     print()
-    print(datos_filtrados)
+    #print(datos_filtrados)
     print()
     print()
     print("ANALIZANDO DATOS....")
@@ -73,9 +78,35 @@ def solicitar_datos_de_influxdb():
     ##############################################################
     ######### AQUI VA CODIGO DE ANALISIS DE DATOS ################
     ##############################################################
-       
-        
-        
+    print("NUEVO DATAFRAME")
+    df_temp = data_frame.loc[:,'FECHA':'TEMP']
+    print(df_temp)
+    
+    print("VERACIDAD DE LOS DATOS")
+    print(df_temp.isnull().sum())
+    df_temp = df_temp.fillna(df_temp.mean())
+    
+    
+    print("MAXIMO,MINIMO,MEDIA,DESVIACION")
+    data_max = data_frame.loc[:,'NIV':'TEMP'].max()
+    data_min = data_frame.loc[:,'NIV':'TEMP'].min()
+    data_media = data_frame.loc[:,'NIV':'TEMP'].mean()
+    data_std = data_frame.loc[:,'NIV':'TEMP'].std()
+    data_resume = DataFrame([data_min, data_max, data_media, data_std], index=['min','max','mean', 'std'])
+    print(data_resume)
+
+    print("REGRESION LINEAL")
+    x_train = data_frame.loc[:data_frame.shape[0]-1,'NIV':'PRES']
+    y_train = data_frame.loc[:data_frame.shape[0]-1,'TEMP']
+    predict_value = DataFrame(data_frame[['NIV', 'PRES']].values[-1], index=['NIV', 'PRES'])
+    #print(predict_value.shape ,type(predict_value))
+    #print(predict_value)
+    linear_reg = LinearRegression().fit(x_train, y_train)
+    test_predict = linear_reg.predict(predict_value.T)
+    print("prediccion de la temperatura con respecto a las otras varibles ", test_predict)
+    
+    #print(x_train.shape, type(x_train))
+    #print(y_train.shape, type(y_train))
      
     ######################################envio de datos ########################
        
@@ -109,7 +140,6 @@ def solicitar_datos_de_influxdb():
 
 ###############################################  ACTUALIZACION DE DATOS ###################################
 
-
 def process_function(msg):
   mesage = msg.decode("utf-8")
   #print(mesage)
@@ -136,4 +166,4 @@ while 1:
   #start consuming (blocks)
   channel.start_consuming()
   connection.close()
-################################################################################################################
+
