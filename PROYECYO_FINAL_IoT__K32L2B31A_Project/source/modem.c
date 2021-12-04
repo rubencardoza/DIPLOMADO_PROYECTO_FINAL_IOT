@@ -21,6 +21,8 @@
 #include "botones.h"
 #include "irq_lptmr0.h"
 #include "fsl_gpio.h"
+#include "sensor_ultrasonico_dp1.h"
+#include "sensor_MQ3.h"
 
 
 
@@ -52,14 +54,22 @@ const char APN_APP[]="internet.colombiamovil.com.co";
 /*******************************************************************************
  * External vars
  ******************************************************************************/
-extern uint32_t adc_sensor_de_luz;
-extern float sensor_1_ultrasonico;
-extern float sensor_2_ultrasonico;
-extern uint32_t minutos;
-extern uint32_t segundos;
-extern uint32_t horas;
+
+extern volatile float sensor_1_ultrasonico;
+
+extern uint8_t minutos;
+extern uint8_t segundos;
+extern uint8_t horas;
+
+extern uint8_t segundos_destilacion;
+extern uint8_t minutos_destilacion;
+extern uint8_t horas_destilacion;
+
+
 extern float sensor_temperatura;
-extern uint32_t adc_sensor_de_presion;
+extern float alcohol;
+
+
 
 /*******************************************************************************
  * Local vars
@@ -164,7 +174,9 @@ enum{
 	ST_MOD_IDENTIFICADOR,
 	ST_MOD_NUMERO_2,
 	ST_MOD_NUMERO_3,
-	ST_MOD_NUMERO_4
+	ST_MOD_NUMERO_4,
+	ST_ESPERAR_10_SEGUNDOS,
+	ON_VERDE,
 
 };
 
@@ -236,7 +248,7 @@ void Modem_Task_Run(void){
 		Modem_Rta_Cmd(10000,"OK",ST_MOD_OPEN_MQTT,ST_MOD_ACT_CTX); 	//rx "OK"
 	break;
 	case ST_MOD_OPEN_MQTT:
-		Modem_Send_Cmd("AT+QMTOPEN=0,\"20.102.52.138\",1883\r\n"); //tx "AT+QMTOPEN=0,"20.102.52.138",1883"
+		Modem_Send_Cmd("AT+QMTOPEN=0,\"52.149.151.75\",1883\r\n"); //tx "AT+QMTOPEN=0,"52.149.151.75",1883"
 		Modem_Rta_Cmd(5000,"+QMTOPEN: 0,0",ST_MOD_CONN_TOPIC,ST_MOD_ACT_CTX);
 	break;
 	case ST_MOD_CONN_TOPIC:
@@ -248,15 +260,22 @@ void Modem_Task_Run(void){
 		Modem_Rta_Cmd(5000,">",ST_MOD_PUBLIC_DAT,ST_MOD_CONN_TOPIC);
 	break;
 	case ST_MOD_PUBLIC_DAT:
-		encender_led_verde();
-		encender_led_rojo();
-		printf("Nivel1Deposito,%0.1f,Nivel2Deposito,%0.1f,Fermentacion,%d : %d : %d,Temperatura,%0.1f,Presion,%d\r\n",sensor_1_ultrasonico,sensor_2_ultrasonico,horas,minutos,segundos,sensor_temperatura,adc_sensor_de_presion);
+		//encender_led_rojo();
+		printf("%d,%d,%d,%d,%d,%d,%0.1f,%0.1f,%0.1f\r\n",horas,minutos,segundos,horas_destilacion,minutos_destilacion,segundos_destilacion,sensor_temperatura,sensor_1_ultrasonico,alcohol);
+		//printf("%0.2f\r\n",sensor_temperatura);
 		putchar(CNTL_Z);
-		Modem_Rta_Cmd(6000,"OK",ST_MOD_PUBLIC_DAT,ST_MOD_CONN_PUB);
+		Modem_Rta_Cmd(10000,"OK",ST_ESPERAR_10_SEGUNDOS,ST_ESPERAR_10_SEGUNDOS);
 		//recibiMsgQtt = 0;*/
 		//Modem_Rta_Cmd_2("RING",ST_MOD_RING_ON);
 		//Key_Task_Run();
 
+	break;
+	case ST_ESPERAR_10_SEGUNDOS:
+		Modem_Rta_Cmd(10000,"ESPERAR",ST_MOD_CONN_PUB,ST_MOD_CONN_PUB);
+	break;
+	case ON_VERDE:
+		encender_led_verde();
+		Modem_Rta_Cmd(1000,"ESPERAR",ST_MOD_CONN_PUB,ST_MOD_CONN_PUB);
 	break;
 
 
@@ -316,7 +335,6 @@ void Key_Task_Run(void){
  	 }
  	if(tiempopresionado==1000){
  	 	  if(!B1 && !estado){
- 	 		  printf("%u\r\n",adc_sensor_de_luz);
  	 		  putchar(CNTL_Z);
  	 		  Modem_Rta_Cmd(10000,"OK",ST_MOD_PUBLIC_DAT,ST_MOD_PUBLIC_DAT);
  	 		  estado=1;

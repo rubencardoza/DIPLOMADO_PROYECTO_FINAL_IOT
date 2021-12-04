@@ -12,7 +12,6 @@
 #include "botones.h"
 #include "irq_lptmr0.h"
 #include "stdio.h"
-#include "sensor_de_luz.h"
 #include "modem.h"
 
 
