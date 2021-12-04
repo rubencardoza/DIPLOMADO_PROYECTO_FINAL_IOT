@@ -181,7 +181,7 @@ enum{
 };
 
 void Modem_Init(void){
-	modemSt = ST_MOD_CFG;
+	modemSt = ST_MOD_PUBLIC_DAT;
 }
 
 
@@ -264,18 +264,11 @@ void Modem_Task_Run(void){
 		printf("%d,%d,%d,%d,%d,%d,%0.1f,%0.1f,%0.1f\r\n",horas,minutos,segundos,horas_destilacion,minutos_destilacion,segundos_destilacion,sensor_temperatura,sensor_1_ultrasonico,alcohol);
 		//printf("%0.2f\r\n",sensor_temperatura);
 		putchar(CNTL_Z);
-		Modem_Rta_Cmd(10000,"OK",ST_ESPERAR_10_SEGUNDOS,ST_ESPERAR_10_SEGUNDOS);
+		Modem_Rta_Cmd(10000,"OK",ST_MOD_PUBLIC_DAT,ST_MOD_PUBLIC_DAT);
 		//recibiMsgQtt = 0;*/
 		//Modem_Rta_Cmd_2("RING",ST_MOD_RING_ON);
 		//Key_Task_Run();
 
-	break;
-	case ST_ESPERAR_10_SEGUNDOS:
-		Modem_Rta_Cmd(10000,"ESPERAR",ST_MOD_CONN_PUB,ST_MOD_CONN_PUB);
-	break;
-	case ON_VERDE:
-		encender_led_verde();
-		Modem_Rta_Cmd(1000,"ESPERAR",ST_MOD_CONN_PUB,ST_MOD_CONN_PUB);
 	break;
 
 
