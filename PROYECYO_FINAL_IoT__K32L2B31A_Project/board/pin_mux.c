@@ -111,11 +111,12 @@ BOARD_InitPins:
   - {pin_num: '35', peripheral: GPIOB, signal: 'GPIO, 0', pin_signal: LCD_P0/ADC0_SE8/PTB0/LLWU_P5/I2C0_SCL/TPM1_CH0, direction: OUTPUT}
   - {pin_num: '36', peripheral: GPIOB, signal: 'GPIO, 1', pin_signal: LCD_P1/ADC0_SE9/PTB1/I2C0_SDA/TPM1_CH1, direction: INPUT}
   - {pin_num: '44', peripheral: GPIOC, signal: 'GPIO, 1', pin_signal: LCD_P21/ADC0_SE15/PTC1/LLWU_P6/RTC_CLKIN/I2C1_SCL/TPM0_CH0, direction: INPUT}
-  - {pin_num: '43', peripheral: ADC0, signal: 'SE, 14', pin_signal: LCD_P20/ADC0_SE14/PTC0/EXTRG_IN/USB_SOF_OUT/CMP0_OUT}
-  - {pin_num: '2', peripheral: GPIOE, signal: 'GPIO, 1', pin_signal: LCD_P49/PTE1/SPI1_MOSI/LPUART1_RX/SPI1_MISO/I2C1_SCL, identifier: GPIOE1, direction: INPUT}
-  - {pin_num: '1', peripheral: GPIOE, signal: 'GPIO, 0', pin_signal: LCD_P48/PTE0/CLKOUT32K/SPI1_MISO/LPUART1_TX/RTC_CLKOUT/CMP0_OUT/I2C1_SDA, identifier: GPIOE0,
-    direction: OUTPUT}
-  - {pin_num: '64', peripheral: GPIOD, signal: 'GPIO, 7', pin_signal: LCD_P47/PTD7/SPI1_MISO/LPUART0_TX/SPI1_MOSI/FXIO0_D7, direction: OUTPUT}
+  - {pin_num: '56', peripheral: SPI0, signal: MISO, pin_signal: LCD_P27/CMP0_IN1/PTC7/SPI0_MISO/USB_SOF_OUT/SPI0_MOSI, direction: INPUT}
+  - {pin_num: '55', peripheral: SPI0, signal: MOSI, pin_signal: LCD_P26/CMP0_IN0/PTC6/LLWU_P10/SPI0_MOSI/EXTRG_IN/SPI0_MISO, direction: OUTPUT}
+  - {pin_num: '53', peripheral: SPI0, signal: PCS0, pin_signal: LCD_P24/PTC4/LLWU_P8/SPI0_SS/LPUART1_TX/TPM0_CH3, direction: OUTPUT}
+  - {pin_num: '54', peripheral: SPI0, signal: SCK, pin_signal: LCD_P25/PTC5/LLWU_P9/SPI0_SCK/LPTMR0_ALT2/CMP0_OUT, direction: OUTPUT}
+  - {pin_num: '2', peripheral: GPIOE, signal: 'GPIO, 1', pin_signal: LCD_P49/PTE1/SPI1_MOSI/LPUART1_RX/SPI1_MISO/I2C1_SCL}
+  - {pin_num: '18', peripheral: ADC0, signal: 'SE, 23', pin_signal: DAC0_OUT/ADC0_SE23/CMP0_IN4/PTE30/TPM0_CH3/TPM_CLKIN1/LPUART1_TX/LPTMR0_ALT1}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -132,8 +133,6 @@ void BOARD_InitPins(void)
     CLOCK_EnableClock(kCLOCK_PortB);
     /* Port C Clock Gate Control: Clock enabled */
     CLOCK_EnableClock(kCLOCK_PortC);
-    /* Port D Clock Gate Control: Clock enabled */
-    CLOCK_EnableClock(kCLOCK_PortD);
     /* Port E Clock Gate Control: Clock enabled */
     CLOCK_EnableClock(kCLOCK_PortE);
 
@@ -158,47 +157,32 @@ void BOARD_InitPins(void)
     /* Initialize GPIO functionality on pin PTC1 (pin 44)  */
     GPIO_PinInit(BOARD_GPIOC1_GPIO, BOARD_GPIOC1_PIN, &GPIOC1_config);
 
-    gpio_pin_config_t GPIOD7_config = {
-        .pinDirection = kGPIO_DigitalOutput,
-        .outputLogic = 0U
-    };
-    /* Initialize GPIO functionality on pin PTD7 (pin 64)  */
-    GPIO_PinInit(BOARD_GPIOD7_GPIO, BOARD_GPIOD7_PIN, &GPIOD7_config);
-
-    gpio_pin_config_t GPIOE0_config = {
-        .pinDirection = kGPIO_DigitalOutput,
-        .outputLogic = 0U
-    };
-    /* Initialize GPIO functionality on pin PTE0 (pin 1)  */
-    GPIO_PinInit(BOARD_GPIOE0_GPIO, BOARD_GPIOE0_PIN, &GPIOE0_config);
-
-    gpio_pin_config_t GPIOE1_config = {
-        .pinDirection = kGPIO_DigitalInput,
-        .outputLogic = 0U
-    };
-    /* Initialize GPIO functionality on pin PTE1 (pin 2)  */
-    GPIO_PinInit(BOARD_GPIOE1_GPIO, BOARD_GPIOE1_PIN, &GPIOE1_config);
-
     /* PORTB0 (pin 35) is configured as PTB0 */
     PORT_SetPinMux(BOARD_GPIOB0_PORT, BOARD_GPIOB0_PIN, kPORT_MuxAsGpio);
 
     /* PORTB1 (pin 36) is configured as PTB1 */
     PORT_SetPinMux(BOARD_GPIOB1_PORT, BOARD_GPIOB1_PIN, kPORT_MuxAsGpio);
 
-    /* PORTC0 (pin 43) is configured as ADC0_SE14 */
-    PORT_SetPinMux(PORTC, 0U, kPORT_PinDisabledOrAnalog);
-
     /* PORTC1 (pin 44) is configured as PTC1 */
     PORT_SetPinMux(BOARD_GPIOC1_PORT, BOARD_GPIOC1_PIN, kPORT_MuxAsGpio);
 
-    /* PORTD7 (pin 64) is configured as PTD7 */
-    PORT_SetPinMux(BOARD_GPIOD7_PORT, BOARD_GPIOD7_PIN, kPORT_MuxAsGpio);
+    /* PORTC4 (pin 53) is configured as SPI0_SS */
+    PORT_SetPinMux(BOARD_LCD_P24_PORT, BOARD_LCD_P24_PIN, kPORT_MuxAlt2);
 
-    /* PORTE0 (pin 1) is configured as PTE0 */
-    PORT_SetPinMux(BOARD_GPIOE0_PORT, BOARD_GPIOE0_PIN, kPORT_MuxAsGpio);
+    /* PORTC5 (pin 54) is configured as SPI0_SCK */
+    PORT_SetPinMux(BOARD_INT1_ACCEL_PORT, BOARD_INT1_ACCEL_PIN, kPORT_MuxAlt2);
+
+    /* PORTC6 (pin 55) is configured as SPI0_MOSI */
+    PORT_SetPinMux(BOARD_LCD_P26_PORT, BOARD_LCD_P26_PIN, kPORT_MuxAlt2);
+
+    /* PORTC7 (pin 56) is configured as SPI0_MISO */
+    PORT_SetPinMux(BOARD_LCD_P27_PORT, BOARD_LCD_P27_PIN, kPORT_MuxAlt2);
 
     /* PORTE1 (pin 2) is configured as PTE1 */
-    PORT_SetPinMux(BOARD_GPIOE1_PORT, BOARD_GPIOE1_PIN, kPORT_MuxAsGpio);
+    PORT_SetPinMux(PORTE, 1U, kPORT_MuxAsGpio);
+
+    /* PORTE30 (pin 18) is configured as ADC0_SE23 */
+    PORT_SetPinMux(PORTE, 30U, kPORT_PinDisabledOrAnalog);
 }
 
 /* clang-format off */
@@ -493,8 +477,6 @@ BOARD_InitACCEL_I2CPins:
   - {pin_num: '21', peripheral: I2C0, signal: SDA, pin_signal: PTE25/TPM0_CH1/I2C0_SDA, slew_rate: fast, pull_select: up, pull_enable: enable}
   - {pin_num: '58', peripheral: GPIOD, signal: 'GPIO, 1', pin_signal: LCD_P41/ADC0_SE5b/PTD1/SPI0_SCK/TPM0_CH1/FXIO0_D1, identifier: INT2_ACCEL, direction: INPUT,
     slew_rate: fast, pull_select: up, pull_enable: disable}
-  - {pin_num: '54', peripheral: GPIOC, signal: 'GPIO, 5', pin_signal: LCD_P25/PTC5/LLWU_P9/SPI0_SCK/LPTMR0_ALT2/CMP0_OUT, direction: INPUT, slew_rate: fast, pull_select: up,
-    pull_enable: disable}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -507,19 +489,10 @@ BOARD_InitACCEL_I2CPins:
  * END ****************************************************************************************************************/
 void BOARD_InitACCEL_I2CPins(void)
 {
-    /* Port C Clock Gate Control: Clock enabled */
-    CLOCK_EnableClock(kCLOCK_PortC);
     /* Port D Clock Gate Control: Clock enabled */
     CLOCK_EnableClock(kCLOCK_PortD);
     /* Port E Clock Gate Control: Clock enabled */
     CLOCK_EnableClock(kCLOCK_PortE);
-
-    gpio_pin_config_t INT1_ACCEL_config = {
-        .pinDirection = kGPIO_DigitalInput,
-        .outputLogic = 0U
-    };
-    /* Initialize GPIO functionality on pin PTC5 (pin 54)  */
-    GPIO_PinInit(BOARD_INT1_ACCEL_GPIO, BOARD_INT1_ACCEL_PIN, &INT1_ACCEL_config);
 
     gpio_pin_config_t INT2_ACCEL_config = {
         .pinDirection = kGPIO_DigitalInput,
@@ -527,24 +500,6 @@ void BOARD_InitACCEL_I2CPins(void)
     };
     /* Initialize GPIO functionality on pin PTD1 (pin 58)  */
     GPIO_PinInit(BOARD_INT2_ACCEL_GPIO, BOARD_INT2_ACCEL_PIN, &INT2_ACCEL_config);
-
-    /* PORTC5 (pin 54) is configured as PTC5 */
-    PORT_SetPinMux(BOARD_INT1_ACCEL_PORT, BOARD_INT1_ACCEL_PIN, kPORT_MuxAsGpio);
-
-    PORTC->PCR[5] = ((PORTC->PCR[5] &
-                      /* Mask bits to zero which are setting */
-                      (~(PORT_PCR_PS_MASK | PORT_PCR_PE_MASK | PORT_PCR_SRE_MASK | PORT_PCR_ISF_MASK)))
-
-                     /* Pull Select: Internal pullup resistor is enabled on the corresponding pin, if the
-                      * corresponding PE field is set. */
-                     | PORT_PCR_PS(kPORT_PullUp)
-
-                     /* Pull Enable: Internal pullup or pulldown resistor is not enabled on the corresponding pin. */
-                     | PORT_PCR_PE(kPORT_PullDisable)
-
-                     /* Slew Rate Enable: Fast slew rate is configured on the corresponding pin, if the pin is
-                      * configured as a digital output. */
-                     | PORT_PCR_SRE(kPORT_FastSlewRate));
 
     /* PORTD1 (pin 58) is configured as PTD1 */
     PORT_SetPinMux(BOARD_INT2_ACCEL_PORT, BOARD_INT2_ACCEL_PIN, kPORT_MuxAsGpio);

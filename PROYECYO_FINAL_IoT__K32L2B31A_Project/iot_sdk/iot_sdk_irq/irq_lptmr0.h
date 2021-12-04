@@ -35,10 +35,13 @@
 extern volatile uint32_t lptmr0_irq_counter;
 extern volatile uint32_t tiempopresionado;
 extern volatile uint32_t tiemposensorultrasonico;
-extern volatile uint32_t tiempocapturadato_echo;
+extern volatile uint32_t tiempo_capturadato_temperatura;
+extern volatile uint32_t tiempo_captura_datos;
 extern volatile uint32_t tiempofermentacion;
+extern volatile uint32_t tiempodestilacion;
 extern volatile uint32_t boton1_presionado;
 extern volatile uint32_t estado;
+extern volatile uint32_t tiempo_envio_a_rabbit;
 /*******************************************************************************
  * Public Prototypes
  ******************************************************************************/

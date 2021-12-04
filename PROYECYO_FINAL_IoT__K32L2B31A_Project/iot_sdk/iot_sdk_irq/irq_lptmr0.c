@@ -37,8 +37,11 @@
  volatile uint32_t lptmr0_irq_counter=0;
  volatile uint32_t tiempopresionado=0;
  volatile uint32_t tiemposensorultrasonico=0;
- volatile uint32_t tiempocapturadato_echo=0;
+ volatile uint32_t tiempo_capturadato_temperatura=0;
  volatile uint32_t tiempofermentacion=0;
+ volatile uint32_t tiempodestilacion=0;
+ volatile uint32_t tiempo_captura_datos=0;
+ volatile uint32_t tiempo_envio_a_rabbit=0;
 
 
 
@@ -56,10 +59,13 @@ void LPTMR0_IRQHANDLER(void) {
   /* Place your code here */
 
    lptmr0_irq_counter++;
-   tiempopresionado++;
    tiemposensorultrasonico++;
-   tiempocapturadato_echo++;
+   tiempo_capturadato_temperatura++;
    tiempofermentacion++;
+   tiempo_captura_datos++;
+   tiempodestilacion++;
+   tiempopresionado++;
+   tiempo_envio_a_rabbit++;
 
 
    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F
