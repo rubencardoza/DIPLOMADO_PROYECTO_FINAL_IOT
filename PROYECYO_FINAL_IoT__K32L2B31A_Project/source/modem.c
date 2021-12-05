@@ -23,6 +23,7 @@
 #include "fsl_gpio.h"
 #include "sensor_ultrasonico_dp1.h"
 #include "sensor_MQ3.h"
+#include "cronometro.h"
 
 
 
@@ -55,7 +56,7 @@ const char APN_APP[]="internet.colombiamovil.com.co";
  * External vars
  ******************************************************************************/
 
-extern volatile float sensor_1_ultrasonico;
+
 
 extern uint8_t minutos;
 extern uint8_t segundos;
@@ -65,7 +66,7 @@ extern uint8_t segundos_destilacion;
 extern uint8_t minutos_destilacion;
 extern uint8_t horas_destilacion;
 
-
+extern float mililitros_alcohol;
 extern float sensor_temperatura;
 extern float alcohol;
 
@@ -261,10 +262,10 @@ void Modem_Task_Run(void){
 	break;
 	case ST_MOD_PUBLIC_DAT:
 		//encender_led_rojo();
-		printf("%d,%d,%d,%d,%d,%d,%0.1f,%0.1f,%0.1f\r\n",horas,minutos,segundos,horas_destilacion,minutos_destilacion,segundos_destilacion,sensor_temperatura,sensor_1_ultrasonico,alcohol);
+		printf("%d,%d,%d,%d,%d,%d,%0.1f,%0.1f,%0.1f\r\n",horas,minutos,segundos,horas_destilacion,minutos_destilacion,segundos_destilacion,sensor_temperatura,mililitros_alcohol,alcohol);
 		//printf("%0.2f\r\n",sensor_temperatura);
 		putchar(CNTL_Z);
-		Modem_Rta_Cmd(10000,"OK",ST_MOD_PUBLIC_DAT,ST_MOD_PUBLIC_DAT);
+		Modem_Rta_Cmd(5000,"OK",ST_MOD_PUBLIC_DAT,ST_MOD_PUBLIC_DAT);
 		//recibiMsgQtt = 0;*/
 		//Modem_Rta_Cmd_2("RING",ST_MOD_RING_ON);
 		//Key_Task_Run();

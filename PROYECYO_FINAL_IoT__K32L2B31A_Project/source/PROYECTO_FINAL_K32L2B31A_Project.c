@@ -92,28 +92,18 @@ int main(void) {
     Sensor_temperatura_Init();
     sensor_MQ3_Init();
 
-	///////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-	//////////////////////////////////////////////////////////////////////////////////////////
-
     while(1) { // multiTaks de tareas por Polling
 
     	Modem_Task_Run();
-    	if(tiempo_captura_datos > 0 && tiempo_captura_datos < 3000){
-    		tiempo_fermentacion();
-    		tiempo_destilacion();
-    		Sensor_temperatura_Task_Run();
-    		sensor_MQ3_Task_Run();
 
+    	if(tiempo_captura_datos > 0 && tiempo_captura_datos < 4000){
+    		Fermentacion();
+    		Destilacion();
     	}
-    	if(tiempo_captura_datos > 3000 && tiempo_captura_datos < 4000){
+    	if(tiempo_captura_datos > 4000 && tiempo_captura_datos < 4100){
     		Sensorultrasonico_1_Task_Run();
     	}
-    	if(tiempo_captura_datos > 4000){
+    	if(tiempo_captura_datos > 4100){
     		tiempo_captura_datos = 0 ;
     	}
     }
