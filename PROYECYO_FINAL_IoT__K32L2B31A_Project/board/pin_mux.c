@@ -22,7 +22,7 @@ pin_labels:
 - {pin_num: '27', pin_signal: PTA5/USB_CLKIN/TPM0_CH2, label: 'J1[12]/D5/USB_CLKIN', identifier: USB0_CLKIN}
 - {pin_num: '17', pin_signal: CMP0_IN5/ADC0_SE4b/PTE29/TPM0_CH2/TPM_CLKIN0, label: 'J1[14]/D6/CMP0_IN5'}
 - {pin_num: '18', pin_signal: DAC0_OUT/ADC0_SE23/CMP0_IN4/PTE30/TPM0_CH3/TPM_CLKIN1/LPUART1_TX/LPTMR0_ALT1, label: 'J1[16]/J4[11]/D7/CMP0_IN4/DAC_OUT'}
-- {pin_num: '29', pin_signal: PTA13/TPM1_CH1, label: 'J2[2]/D8'}
+- {pin_num: '29', pin_signal: PTA13/TPM1_CH1, label: 'J2[2]/D8', identifier: GPIOA13}
 - {pin_num: '59', pin_signal: LCD_P42/PTD2/SPI0_MOSI/UART2_RX/TPM0_CH2/SPI0_MISO/FXIO0_D2, label: 'J2[4]/D9/LCD_P42', identifier: LCD_P42}
 - {pin_num: '61', pin_signal: LCD_P44/PTD4/LLWU_P14/SPI1_SS/UART2_RX/TPM0_CH4/FXIO0_D4, label: 'J2[6]/D10/SPI1_PCS0/LCD_P44', identifier: LCD_P44}
 - {pin_num: '63', pin_signal: LCD_P46/ADC0_SE7b/PTD6/LLWU_P15/SPI1_MOSI/LPUART0_RX/SPI1_MISO/FXIO0_D6, label: 'J2[8]/D11/SPI1_MOSI/LCD_P46'}
@@ -117,6 +117,7 @@ BOARD_InitPins:
   - {pin_num: '54', peripheral: SPI0, signal: SCK, pin_signal: LCD_P25/PTC5/LLWU_P9/SPI0_SCK/LPTMR0_ALT2/CMP0_OUT, direction: OUTPUT}
   - {pin_num: '2', peripheral: GPIOE, signal: 'GPIO, 1', pin_signal: LCD_P49/PTE1/SPI1_MOSI/LPUART1_RX/SPI1_MISO/I2C1_SCL}
   - {pin_num: '18', peripheral: ADC0, signal: 'SE, 23', pin_signal: DAC0_OUT/ADC0_SE23/CMP0_IN4/PTE30/TPM0_CH3/TPM_CLKIN1/LPUART1_TX/LPTMR0_ALT1}
+  - {pin_num: '29', peripheral: GPIOA, signal: 'GPIO, 13', pin_signal: PTA13/TPM1_CH1, direction: OUTPUT}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -129,12 +130,21 @@ BOARD_InitPins:
  * END ****************************************************************************************************************/
 void BOARD_InitPins(void)
 {
+    /* Port A Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortA);
     /* Port B Clock Gate Control: Clock enabled */
     CLOCK_EnableClock(kCLOCK_PortB);
     /* Port C Clock Gate Control: Clock enabled */
     CLOCK_EnableClock(kCLOCK_PortC);
     /* Port E Clock Gate Control: Clock enabled */
     CLOCK_EnableClock(kCLOCK_PortE);
+
+    gpio_pin_config_t GPIOA13_config = {
+        .pinDirection = kGPIO_DigitalOutput,
+        .outputLogic = 0U
+    };
+    /* Initialize GPIO functionality on pin PTA13 (pin 29)  */
+    GPIO_PinInit(BOARD_GPIOA13_GPIO, BOARD_GPIOA13_PIN, &GPIOA13_config);
 
     gpio_pin_config_t GPIOB0_config = {
         .pinDirection = kGPIO_DigitalOutput,
@@ -156,6 +166,9 @@ void BOARD_InitPins(void)
     };
     /* Initialize GPIO functionality on pin PTC1 (pin 44)  */
     GPIO_PinInit(BOARD_GPIOC1_GPIO, BOARD_GPIOC1_PIN, &GPIOC1_config);
+
+    /* PORTA13 (pin 29) is configured as PTA13 */
+    PORT_SetPinMux(BOARD_GPIOA13_PORT, BOARD_GPIOA13_PIN, kPORT_MuxAsGpio);
 
     /* PORTB0 (pin 35) is configured as PTB0 */
     PORT_SetPinMux(BOARD_GPIOB0_PORT, BOARD_GPIOB0_PIN, kPORT_MuxAsGpio);
